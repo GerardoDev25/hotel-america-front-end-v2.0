@@ -17,6 +17,7 @@ type Props = Readonly<{
 
 export default function RootLayout({ children }: Props) {
   return (
+    // <html lang='en' className='dark'>
     <html lang='en'>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>

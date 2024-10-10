@@ -3,7 +3,7 @@ import { fontTitle } from '@/config/fonts';
 interface Props {
   title: string;
   subTitle?: string;
-  className?: string;
+  className?: React.StyleHTMLAttributes<HTMLImageElement>['className'];
 }
 
 export const Title = (props: Props) => {
