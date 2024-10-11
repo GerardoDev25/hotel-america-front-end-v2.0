@@ -1,7 +1,9 @@
 'use client';
 
+import { login } from '@/actions/auth';
 import { Title } from '@/components/ui';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 type FormInputs = {
@@ -16,9 +18,17 @@ export const LoginForm = () => {
     formState: { errors },
   } = useForm<FormInputs>();
 
+  const route = useRouter();
+
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { password, username } = data;
-    console.log({ password, username });
+    const resp = await login({ password, username });
+
+    // todo handle error
+
+    if (resp.ok) {
+      route.replace(`/${resp.user?.role}`);
+    }
   };
 
   return (

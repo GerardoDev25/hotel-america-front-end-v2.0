@@ -1,5 +1,5 @@
 'use server';
-// Next.js Server Components
+
 import { cookies } from 'next/headers';
 import { envs } from '@/config/envs';
 
@@ -16,25 +16,28 @@ type METHOD = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export const customFetch = async (params: Params) => {
   const { url, data, method = 'GET', isAuth = false, isCache = false } = params;
 
-  const myHeaders = new Headers();
+  const headers = new Headers();
+
+  headers.append('Content-Type', 'application/json');
 
   if (isAuth) {
     const token = cookies().get('token');
-    myHeaders.append('Authorization', `Bearer ${token}`);
+    headers.append('Authorization', `Bearer ${token}`);
   }
 
   const requestOptions = {
     method,
-    headers: myHeaders,
+    headers,
     body: data ? JSON.stringify(data) : null,
   };
+  try {
+    const resp = await fetch(`${envs.BACK_END_URL}${url}`, {
+      ...requestOptions,
+      cache: isCache ? 'force-cache' : 'no-cache',
+    }).then((res) => res.text());
 
-  const resp = await fetch(`${envs.BACK_END_URL}${url}`, {
-    ...requestOptions,
-    cache: isCache ? 'force-cache' : 'no-cache',
-  })
-    .then((res) => res.json())
-    .catch(console.log);
-
-  console.log(resp);
+    return JSON.parse(resp);
+  } catch (error) {
+    return { ok: false, errors: [(error as Error).message] };
+  }
 };
