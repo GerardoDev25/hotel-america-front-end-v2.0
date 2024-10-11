@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
+
 import { inter } from '@/config/fonts';
 
 import './globals.css';
+import { ToastifyProvider } from '@/components/providers';
 
 export const metadata: Metadata = {
   title: {
@@ -19,7 +21,9 @@ export default function RootLayout({ children }: Props) {
   return (
     // <html lang='en' className='dark'>
     <html lang='en'>
-      <body className={`${inter.className} antialiased`}>{children}</body>
+      <body className={`${inter.className} antialiased`}>
+        <ToastifyProvider>{children}</ToastifyProvider>
+      </body>
     </html>
   );
 }
