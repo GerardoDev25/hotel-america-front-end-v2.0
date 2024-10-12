@@ -1,11 +1,13 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+import clsx from 'clsx';
+import { SubmitHandler, useForm } from 'react-hook-form';
+
 import { login } from '@/actions/auth';
 import { NotificationError, Title } from '@/components/ui';
 import { useSideMenuStore } from '@/store/ui';
-import clsx from 'clsx';
-import { useRouter } from 'next/navigation';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useUserStore } from '@/store/user/user-store';
 
 type FormInputs = {
   username: string;
@@ -22,16 +24,21 @@ export const LoginForm = () => {
   const route = useRouter();
 
   const triggerToast = useSideMenuStore((s) => s.triggerToast);
+  const setUser = useUserStore((s) => s.setUser);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { password, username } = data;
-    const resp = await login({ password, username });
+    const { ok, errors, user } = await login({ password, username });
 
-    if (resp.ok) {
-      triggerToast(`welcome ${resp.user?.name}`, {});
-      route.replace(`/${resp.user?.role}`);
+    if (ok) {
+      setUser(user!);
+      triggerToast(`welcome ${user?.name}`, {}, 'success');
+      route.replace(`/${user?.role}`);
     } else {
-      triggerToast(<NotificationError errors={resp.errors!} />);
+      triggerToast(<NotificationError errors={errors!} />, {
+        autoClose: false,
+        position: 'top-center',
+      });
     }
   };
 

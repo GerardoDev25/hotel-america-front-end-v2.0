@@ -4,12 +4,14 @@ import { create } from 'zustand';
 interface State {
   triggerToast: (
     content: ToastContent<unknown>,
-    options?: ToastOptions<unknown>
+    options?: ToastOptions<unknown>,
+    type?: 'info' | 'success' | 'warning' | 'error'
   ) => void;
 }
 
 export const useSideMenuStore = create<State>()(() => ({
-  triggerToast: (content, options) => {
-    toast(content, options);
+  triggerToast: (content, options, type) => {
+    if (type) toast[type](content, options);
+    else toast(content, options);
   },
 }));
