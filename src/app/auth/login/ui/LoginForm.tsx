@@ -1,7 +1,8 @@
 'use client';
 
 import { login } from '@/actions/auth';
-import { Title } from '@/components/ui';
+import { NotificationError, Title } from '@/components/ui';
+import { useSideMenuStore } from '@/store/ui';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -20,14 +21,17 @@ export const LoginForm = () => {
 
   const route = useRouter();
 
+  const triggerToast = useSideMenuStore((s) => s.triggerToast);
+
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { password, username } = data;
     const resp = await login({ password, username });
 
-    // todo handle error
-
     if (resp.ok) {
+      triggerToast(`welcome ${resp.user?.name}`, {});
       route.replace(`/${resp.user?.role}`);
+    } else {
+      triggerToast(<NotificationError errors={resp.errors!} />);
     }
   };
 
