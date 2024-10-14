@@ -29,3 +29,8 @@ export const login = async (data: Params) => {
 
   return resp;
 };
+
+export const logOut = async () => {
+  cookies().set('token', '');
+  return true;
+};
