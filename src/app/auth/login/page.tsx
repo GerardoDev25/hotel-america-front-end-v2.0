@@ -7,6 +7,7 @@ import { logOut, verifyTokenExpired } from '@/actions/auth';
 import { LoginForm } from './ui';
 import { useUserStore } from '@/store/user';
 import { useAuthStore } from '@/store/auth';
+import { VerifyingCredentials } from '@/components/ui';
 
 export default function LoginPage() {
   const [isTokenValidating, setIsTokenValidating] = useState(true);
@@ -40,8 +41,7 @@ export default function LoginPage() {
   }, [resetUser, route, setIsAuth]);
 
   if (isTokenValidating) {
-    // todo create an component to this
-    return <>Verifying Credentials</>;
+    return <VerifyingCredentials />;
   }
   return (
     <main className='flex flex-col min-h-screen'>

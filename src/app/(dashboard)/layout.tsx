@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
 import { verifyTokenExpired } from '@/actions/auth';
+import { VerifyingCredentials } from '@/components/ui';
 
 interface Props {
   children: React.ReactNode;
@@ -32,8 +33,7 @@ export default function ShopLayout({ children }: Props) {
   }, [setIsAuth]);
 
   if (isTokenValidating) {
-    // todo create an component to this
-    return <>Verifying Credentials</>;
+    return <VerifyingCredentials />;
   }
   return (
     <main className='min-h-screen bg-white'>
