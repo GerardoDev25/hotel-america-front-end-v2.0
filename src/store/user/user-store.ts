@@ -15,33 +15,29 @@ interface State {
   resetUser: () => void;
 }
 
+const initialState: State = {
+  user: {
+    birdDate: '',
+    id: '',
+    isActive: false,
+    name: '',
+    phone: '',
+    role: 'cafe',
+    username: '',
+  },
+  setUser: () => {},
+  resetUser: () => {},
+};
+
 export const useUserStore = create<State>()(
   persist(
     (set) => ({
-      user: {
-        birdDate: '',
-        id: '',
-        isActive: false,
-        name: '',
-        phone: '',
-        role: 'cafe',
-        username: '',
-      },
+      user: initialState.user,
 
       setUser: (user) => set({ user }),
 
       resetUser() {
-        set({
-          user: {
-            birdDate: '',
-            id: '',
-            isActive: false,
-            name: '',
-            phone: '',
-            role: 'cafe',
-            username: '',
-          },
-        });
+        set({ user: initialState.user });
       },
     }),
     {

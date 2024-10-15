@@ -1,16 +1,20 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { logOut, verifyTokenExpired } from '@/actions/auth';
 import { LoginForm } from './ui';
-import { useUserStore } from '@/store/user/user-store';
+import { useUserStore } from '@/store/user';
+import { useAuthStore } from '@/store/auth';
 
 export default function LoginPage() {
   const [isTokenValidating, setIsTokenValidating] = useState(true);
   const [isTokenInvalid, setIsTokenInvalid] = useState(false);
 
-  const user = useUserStore((s) => s.user);
+  const resetUser = useUserStore((s) => s.resetUser);
+  const setIsAuth = useAuthStore((s) => s.setIsAuth);
+
   const route = useRouter();
 
   useEffect(() => {
@@ -18,15 +22,22 @@ export default function LoginPage() {
       const { isTokenExpired } = await verifyTokenExpired();
 
       setIsTokenInvalid(isTokenExpired);
-      console.log({ role: user.role, user });
-      if (isTokenExpired) logOut();
-      else route.replace(`/${user.role}`);
+      if (isTokenExpired) {
+        setIsAuth(false);
+        resetUser();
+        logOut();
+      } else {
+        setIsAuth(true);
+        const localStorageUser = localStorage.getItem('user-storage') || '{}';
+        const { user } = JSON.parse(localStorageUser).state;
+        route.replace(`/${user.role}`);
+      }
 
       setIsTokenValidating(false);
     };
 
     handleTokenExpired();
-  }, [route, user]);
+  }, [resetUser, route, setIsAuth]);
 
   if (isTokenValidating) {
     // todo create an component to this
