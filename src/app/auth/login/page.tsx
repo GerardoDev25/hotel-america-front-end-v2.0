@@ -1,10 +1,9 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-
-import { LoginForm } from './ui';
-import { useAuthStore } from '@/store/auth';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/auth';
+import { LoginForm } from './ui';
 
 export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(true);

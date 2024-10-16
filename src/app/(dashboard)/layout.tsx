@@ -24,7 +24,7 @@ export default function DashboardLayout({ children }: Props) {
   }, [isLoading, isAuth, route]);
 
   return (
-    <main className='min-h-screen bg-white'>
+    <main className='min-h-screen bg-white fade-in'>
       <div className='mx-0 sm:mx-7 bg-backgroundLight'>
         {isAuth && children}
       </div>

@@ -3,5 +3,5 @@ interface Props {
 }
 
 export default async function AuthLayout({ children }: Props) {
-  return <div>{children}</div>;
+  return <div className='fade-in'>{children}</div>;
 }

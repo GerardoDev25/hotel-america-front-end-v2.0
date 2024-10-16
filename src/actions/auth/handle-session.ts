@@ -3,6 +3,7 @@
 import { IUser } from '@/interfaces';
 import { customFetch } from '../fetch';
 import { cookies } from 'next/headers';
+// import { sleep } from '@/utils';
 
 interface Params {
   username: string;
@@ -17,6 +18,7 @@ export interface ApiResponse {
 }
 
 export const login = async (data: Params) => {
+  // await sleep(2);
   const resp: ApiResponse = await customFetch({
     url: '/auth/login',
     data,

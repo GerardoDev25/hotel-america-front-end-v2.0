@@ -1,31 +1,3 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -73,19 +45,21 @@ body {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }
-
-/* .btn-primary {
-  @apply bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded transition-all;
+.btn-primary {
+  @apply w-full bg-primary dark:bg-dark-primary text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors;
 }
 
+/* Secondary Button */
 .btn-secondary {
-  @apply bg-gray-200 hover:bg-gray-300 text-black py-2 px-4 rounded transition-all;
+  @apply w-full bg-gray-500 dark:bg-gray-600 text-white dark:text-dark-text py-3 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors;
 }
 
+/* Danger Button */
 .btn-danger {
-  @apply bg-red-500 hover:bg-red-700 text-white py-2 px-4 transition-all;
+  @apply w-full bg-red-600 dark:bg-red-700 text-white dark:text-dark-text py-3 rounded-lg hover:bg-red-500 dark:hover:bg-red-600 transition-colors;
 }
 
+/* Disabled Button */
 .btn-disable {
-  @apply bg-gray-600 text-white py-2 px-4 rounded transition-all cursor-not-allowed;
-} */
+  @apply w-full bg-gray-300 dark:bg-gray-500 text-gray-500 dark:text-gray-400 py-3 rounded-lg cursor-not-allowed opacity-50;
+}

@@ -18,6 +18,23 @@ export default function DashboardPage() {
           dark-complementary
         </div>
       </div>
+      <div className='mt-3'>
+        <div className='space-y-4'>
+          {/* Primary Button */}
+          <button className='btn-primary'>Primary Action</button>
+
+          {/* Secondary Button */}
+          <button className='btn-secondary'>Secondary Action</button>
+
+          {/* Danger Button */}
+          <button className='btn-danger'>Delete Item</button>
+
+          {/* Disabled Button */}
+          <button className='btn-disable' disabled>
+            Disabled Button
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

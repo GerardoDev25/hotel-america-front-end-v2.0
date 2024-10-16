@@ -1,14 +1,15 @@
 'use client';
 
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { login } from '@/actions/auth';
-import { NotificationError, Title } from '@/components/ui';
 import { useSideMenuStore } from '@/store/ui';
+import { NotificationError, Title } from '@/components/ui';
 import { useUserStore } from '@/store/user/user-store';
 import { useAuthStore } from '@/store/auth';
+import { login } from '@/actions/auth';
 
 type FormInputs = {
   username: string;
@@ -16,6 +17,8 @@ type FormInputs = {
 };
 
 export const LoginForm = () => {
+  const [pending, setPending] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -29,17 +32,18 @@ export const LoginForm = () => {
   const setIsAuth = useAuthStore((s) => s.setIsAuth);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setPending(true);
     const { password, username } = data;
     const { ok, errors, user } = await login({ password, username });
-
+    setPending(false);
     setIsAuth(ok);
     if (ok) {
       setUser(user!);
-      triggerToast(`welcome ${user?.name}`, {}, 'success');
+      triggerToast(`welcome ${user?.name}`, { autoClose: 1000 }, 'success');
       route.replace(`/${user?.role}`);
     } else {
       triggerToast(<NotificationError errors={errors!} />, {
-        autoClose: false,
+        autoClose: 2500,
         position: 'top-center',
       });
     }
@@ -99,7 +103,11 @@ export const LoginForm = () => {
           {/* Submit Button */}
           <button
             type='submit'
-            className='w-full bg-primary dark:bg-dark-primary text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors'
+            disabled={pending}
+            className={clsx({
+              'btn-primary': !pending,
+              'btn-disable': pending,
+            })}
           >
             Log In
           </button>
