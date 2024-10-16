@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import clsx from 'clsx';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import clsx from 'clsx';
 
 import { useSideMenuStore } from '@/store/ui';
 import { NotificationError, Title } from '@/components/ui';
