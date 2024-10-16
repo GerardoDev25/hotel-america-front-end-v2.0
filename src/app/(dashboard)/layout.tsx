@@ -3,38 +3,26 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
-import { verifyTokenExpired } from '@/actions/auth';
-import { VerifyingCredentials } from '@/components/ui';
 
 interface Props {
   children: React.ReactNode;
 }
 
-export default function ShopLayout({ children }: Props) {
-  const [isTokenValidating, setIsTokenValidating] = useState(true);
+export default function DashboardLayout({ children }: Props) {
+  const [isLoading, setIsLoading] = useState(true);
   const isAuth = useAuthStore((s) => s.isAuth);
-  const setIsAuth = useAuthStore((s) => s.setIsAuth);
-  const router = useRouter();
+  const route = useRouter();
 
   useEffect(() => {
-    if (!isAuth) {
-      router.replace('/auth/login');
+    setIsLoading(false);
+  }, [setIsLoading]);
+
+  useEffect(() => {
+    if (!isAuth && !isLoading) {
+      route.replace(`/auth/login`);
     }
-  }, [isAuth, router]);
+  }, [isLoading, isAuth, route]);
 
-  useEffect(() => {
-    const handleTokenExpired = async () => {
-      const { isTokenExpired } = await verifyTokenExpired();
-      setIsAuth(!isTokenExpired);
-      setIsTokenValidating(false);
-    };
-
-    handleTokenExpired();
-  }, [setIsAuth]);
-
-  if (isTokenValidating) {
-    return <VerifyingCredentials />;
-  }
   return (
     <main className='min-h-screen bg-white'>
       <div className='mx-0 sm:mx-7 bg-backgroundLight'>

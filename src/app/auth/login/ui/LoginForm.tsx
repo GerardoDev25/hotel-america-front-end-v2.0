@@ -8,6 +8,7 @@ import { login } from '@/actions/auth';
 import { NotificationError, Title } from '@/components/ui';
 import { useSideMenuStore } from '@/store/ui';
 import { useUserStore } from '@/store/user/user-store';
+import { useAuthStore } from '@/store/auth';
 
 type FormInputs = {
   username: string;
@@ -25,11 +26,13 @@ export const LoginForm = () => {
 
   const triggerToast = useSideMenuStore((s) => s.triggerToast);
   const setUser = useUserStore((s) => s.setUser);
+  const setIsAuth = useAuthStore((s) => s.setIsAuth);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { password, username } = data;
     const { ok, errors, user } = await login({ password, username });
 
+    setIsAuth(ok);
     if (ok) {
       setUser(user!);
       triggerToast(`welcome ${user?.name}`, {}, 'success');
