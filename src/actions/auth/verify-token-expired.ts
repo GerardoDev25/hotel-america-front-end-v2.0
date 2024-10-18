@@ -7,7 +7,6 @@ interface ReturnValue {
 
 export const verifyTokenExpired = async (): Promise<ReturnValue> => {
   const { ok, tokenDecoded, error } = await decodeToken();
-
   if (!ok) return { isTokenExpired: true, error };
 
   const currentTime = Math.floor(Date.now() / 1000);

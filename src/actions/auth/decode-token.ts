@@ -18,6 +18,7 @@ type TokenDecoded = {
 export const decodeToken = async (): Promise<ReturnValue> => {
   try {
     const token = cookies().get('token')?.value;
+
     if (!token) throw 'No Authentication token provided';
 
     const tokenDecoded = jwtDecode<TokenDecoded>(token);
