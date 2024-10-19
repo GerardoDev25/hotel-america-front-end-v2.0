@@ -32,7 +32,6 @@ export const login = async (data: Params) => {
   return resp;
 };
 
-export const logOut = async () => {
+export const logOut = () => {
   cookies().set('token', '');
-  return true;
 };

@@ -38,6 +38,9 @@ export const customFetch = async (params: Params) => {
 
     return JSON.parse(resp);
   } catch (error) {
-    return { ok: false, errors: [(error as Error).message] };
+    return {
+      ok: false,
+      errors: [`${(error as Error).message} couldn't connect with server`],
+    };
   }
 };
