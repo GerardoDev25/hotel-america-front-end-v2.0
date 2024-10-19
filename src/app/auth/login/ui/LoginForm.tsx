@@ -1,22 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { useSideMenuStore } from '@/store/ui';
 import { NotificationError, Title } from '@/components/ui';
-import { useUserStore } from '@/store/user/user-store';
+import { useUserStore } from '@/store/user';
 import { useAuthStore } from '@/store/auth';
 import { login } from '@/actions/auth';
+
+interface Props {
+  errorMessage?: string;
+}
 
 type FormInputs = {
   username: string;
   password: string;
 };
 
-export const LoginForm = () => {
+export const LoginForm = ({ errorMessage }: Props) => {
   const [pending, setPending] = useState(false);
 
   const {
@@ -30,6 +34,12 @@ export const LoginForm = () => {
   const triggerToast = useSideMenuStore((s) => s.triggerToast);
   const setUser = useUserStore((s) => s.setUser);
   const setIsAuth = useAuthStore((s) => s.setIsAuth);
+
+  useEffect(() => {
+    if (errorMessage && errorMessage !== '') {
+      triggerToast(errorMessage, { autoClose: 2500 }, 'error');
+    }
+  }, [triggerToast, errorMessage]);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setPending(true);
