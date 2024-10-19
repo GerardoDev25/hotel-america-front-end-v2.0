@@ -1,13 +1,14 @@
 import { CronJob } from 'cron';
 
-type CronType = string | Date;
 type OnTick = () => void;
+type CronType = string | Date;
+type CronJobId = 'refresh-token';
 
 export class CronService {
   private static instance: CronService;
-  private jobs: Map<string, CronJob> = new Map(); // Store jobs by an ID or name
+  private jobs: Map<CronJobId, CronJob> = new Map();
 
-  private constructor() {} // Private constructor to prevent direct instantiation
+  private constructor() {}
 
   public static getInstance(): CronService {
     if (!CronService.instance) {
@@ -17,7 +18,7 @@ export class CronService {
   }
 
   // * Method to start a cron job
-  public startJob(id: string, cronTime: CronType, onTick: OnTick): void {
+  public startJob(id: CronJobId, cronTime: CronType, onTick: OnTick): void {
     if (this.jobs.has(id)) {
       console.log(`Job with id "${id}" is already running.`);
       return;
@@ -30,7 +31,7 @@ export class CronService {
   }
 
   // * Method to stop and remove a cron job
-  public stopJob(id: string): void {
+  public stopJob(id: CronJobId): void {
     const job = this.jobs.get(id);
     if (job) {
       job.stop();
