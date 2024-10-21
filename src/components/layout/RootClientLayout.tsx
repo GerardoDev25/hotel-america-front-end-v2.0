@@ -24,9 +24,13 @@ export const RootClientLayout = ({ children }: Props) => {
     handleTokenExpired();
   }, [setIsAuth]);
 
-  return isTokenValidating ? (
-    <VerifyingCredentials />
-  ) : (
-    <ToastifyProvider>{children}</ToastifyProvider>
+  return (
+    <>
+      {isTokenValidating ? (
+        <VerifyingCredentials />
+      ) : (
+        <ToastifyProvider>{children}</ToastifyProvider>
+      )}
+    </>
   );
 };
