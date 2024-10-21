@@ -20,6 +20,9 @@ type FormInputs = {
   password: string;
 };
 
+const ToastStyle =
+  'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400';
+
 export const LoginForm = ({ errorMessage }: Props) => {
   const [pending, setPending] = useState(false);
 
@@ -37,7 +40,11 @@ export const LoginForm = ({ errorMessage }: Props) => {
 
   useEffect(() => {
     if (errorMessage && errorMessage !== '') {
-      triggerToast(errorMessage, { autoClose: 2500 }, 'error');
+      triggerToast(
+        errorMessage,
+        { autoClose: 2500, className: ToastStyle },
+        'error'
+      );
     }
   }, [triggerToast, errorMessage]);
 
@@ -49,18 +56,24 @@ export const LoginForm = ({ errorMessage }: Props) => {
     setIsAuth(ok);
     if (ok) {
       setUser(user!);
-      triggerToast(`welcome ${user?.name}`, { autoClose: 1000 }, 'success');
+      triggerToast(
+        `welcome ${user?.name}`,
+        { autoClose: 1000, className: ToastStyle },
+        'success'
+      );
       route.replace(`/${user?.role}`);
     } else {
       triggerToast(<NotificationError errors={errors!} />, {
         autoClose: 2500,
         position: 'top-center',
+        className: ToastStyle,
+        closeButton: false,
       });
     }
   };
 
   return (
-    <div className='flex justify-center items-center h-screen dark:bg-dark-bg'>
+    <div className='flex justify-center items-center h-screen dark:bg-dark-bg '>
       <div className='w-full max-w-md p-8 bg-white dark:bg-dark-primary shadow-md rounded-lg'>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Title
@@ -78,10 +91,11 @@ export const LoginForm = ({ errorMessage }: Props) => {
             <input
               type='text'
               id='username'
+              placeholder='Enter your username'
               className={clsx(
-                'w-full p-3 border rounded-lg bg-gray-100 dark:bg-dark-accent text-textDark dark:text-dark-text focus:outline-none',
+                'w-full p-3 border rounded-lg bg-gray-100 dark:bg-dark-accent text-textDark dark:text-dark-text focus:outline-none dark:placeholder-white dark:placeholder:text-sm',
                 {
-                  'border-red-500': !!errors.username,
+                  'border-red-500 border-2': !!errors.username,
                 }
               )}
               autoFocus
@@ -99,11 +113,12 @@ export const LoginForm = ({ errorMessage }: Props) => {
             </label>
             <input
               type='password'
+              placeholder='Enter your password'
               id='password'
               className={clsx(
-                'w-full p-3 border rounded-lg bg-gray-100 dark:bg-dark-accent text-textDark dark:text-dark-text focus:outline-none',
+                'w-full p-3 border rounded-lg bg-gray-100 dark:bg-dark-accent text-textDark dark:text-dark-text focus:outline-none dark:placeholder-white dark:placeholder:text-sm',
                 {
-                  'border-red-500': !!errors.password,
+                  'border-red-500 border-2': !!errors.password,
                 }
               )}
               {...register('password', { required: true, minLength: 4 })}

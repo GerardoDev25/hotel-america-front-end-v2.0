@@ -46,7 +46,7 @@ body {
   animation-name: fadeIn;
 }
 .btn-primary {
-  @apply w-full bg-primary dark:bg-dark-primary text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors;
+  @apply w-full bg-primary dark:bg-dark-bg text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors;
 }
 
 /* Secondary Button */
