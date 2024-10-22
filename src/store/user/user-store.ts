@@ -1,3 +1,4 @@
+import { UserRole } from '@/interfaces';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -8,7 +9,7 @@ interface State {
     isActive: boolean;
     name: string;
     phone: string;
-    role: 'admin' | 'laundry' | 'reception' | 'cafe';
+    role: UserRole;
     username: string;
   };
   setUser: (user: State['user']) => void;

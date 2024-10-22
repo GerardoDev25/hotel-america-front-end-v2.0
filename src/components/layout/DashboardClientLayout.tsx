@@ -24,7 +24,6 @@ export const DashboardClientLayout = ({ children }: Props) => {
 
   useEffect(() => {
     // ? if is not authenticated, redirect to login page
-    // if (isLoading) return;
     if (!isAuth && !isLoading) route.replace(`/auth/login`);
 
     // ? if is authenticated ensure go is page by role
@@ -33,18 +32,14 @@ export const DashboardClientLayout = ({ children }: Props) => {
     }
   }, [pathName, isLoading, user, route, isAuth]);
 
-  // if (!isAuth) {
-  //   return <></>;
-  // }
   return (
-    <div className='mx-0 sm:mx-7 min-h-screen bg-backgroundLight'>
+    <div className='mx-0 min-h-screen bg-backgroundLight dark:bg-dark-bg dark:text-dark-text transition-colors duration-150 ease-in-out'>
       {isAuth && (
         <>
           <TopMenu />
-          <div>{children}</div>
+          <div className='p-2'>{children}</div>
         </>
       )}
-      {/* <TopMenu /> */}
     </div>
   );
 };
