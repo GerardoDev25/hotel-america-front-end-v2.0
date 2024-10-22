@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
 import { useUserStore } from '@/store/user';
+import { TopMenu } from '@/components/ui';
 
 type Props = Readonly<{
   children: React.ReactNode;
@@ -32,7 +33,18 @@ export const DashboardClientLayout = ({ children }: Props) => {
     }
   }, [pathName, isLoading, user, route, isAuth]);
 
+  // if (!isAuth) {
+  //   return <></>;
+  // }
   return (
-    <div className='mx-0 sm:mx-7 bg-backgroundLight'>{isAuth && children}</div>
+    <div className='mx-0 sm:mx-7 min-h-screen bg-backgroundLight'>
+      {isAuth && (
+        <>
+          <TopMenu />
+          <div>{children}</div>
+        </>
+      )}
+      {/* <TopMenu /> */}
+    </div>
   );
 };
