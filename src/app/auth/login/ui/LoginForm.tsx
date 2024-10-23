@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { useSideMenuStore } from '@/store/ui';
+import { useNotificationStore } from '@/store/ui';
 import { NotificationError, Title } from '@/components/ui';
 import { capitalizeText } from '@/utils';
 import { useUserStore } from '@/store/user';
@@ -32,7 +32,7 @@ export const LoginForm = ({ errorMessage }: Props) => {
     formState: { errors },
   } = useForm<FormInputs>();
 
-  const triggerToast = useSideMenuStore((s) => s.triggerToast);
+  const triggerToast = useNotificationStore((s) => s.triggerToast);
   const setUser = useUserStore((s) => s.setUser);
   const setIsAuth = useAuthStore((s) => s.setIsAuth);
 

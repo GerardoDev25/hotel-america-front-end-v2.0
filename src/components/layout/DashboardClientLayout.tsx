@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
 import { useUserStore } from '@/store/user';
-import { TopMenu } from '@/components/ui';
+import { Sidebar, TopMenu } from '@/components/ui';
 import { getStaffRootUrl } from '@/utils';
 
 type Props = Readonly<{
@@ -39,6 +39,7 @@ export const DashboardClientLayout = ({ children }: Props) => {
       {isAuth && (
         <>
           <TopMenu />
+          <Sidebar />
           <div className='p-2'>{children}</div>
         </>
       )}
