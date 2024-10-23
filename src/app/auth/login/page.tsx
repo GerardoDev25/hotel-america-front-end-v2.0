@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { getStaffRootUrl } from '@/utils';
 import { useAuthStore } from '@/store/auth';
+import { useUserStore } from '@/store/user';
 import { LoginForm } from './ui';
 
 export default function LoginPage() {
@@ -11,17 +13,17 @@ export default function LoginPage() {
   const route = useRouter();
   const searchParams = useSearchParams();
 
+  const user = useUserStore((s) => s.user);
+
   useEffect(() => {
     setIsLoading(false);
   }, [setIsLoading]);
 
   useEffect(() => {
     if (isAuth && !isLoading) {
-      const localStorageUser = localStorage.getItem('user-storage') || '{}';
-      const { user } = JSON.parse(localStorageUser).state;
-      route.replace(`/${user.role}`);
+      route.replace(getStaffRootUrl(user.role));
     }
-  }, [isLoading, isAuth, route]);
+  }, [isLoading, isAuth, route, user]);
 
   const errorMessage = decodeURIComponent(
     searchParams.get('errorMessage') ?? ''

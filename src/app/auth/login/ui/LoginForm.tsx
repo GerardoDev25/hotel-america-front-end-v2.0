@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { useSideMenuStore } from '@/store/ui';
 import { NotificationError, Title } from '@/components/ui';
+import { capitalizeText } from '@/utils';
 import { useUserStore } from '@/store/user';
 import { useAuthStore } from '@/store/auth';
 import { login } from '@/actions/auth';
@@ -32,8 +32,6 @@ export const LoginForm = ({ errorMessage }: Props) => {
     formState: { errors },
   } = useForm<FormInputs>();
 
-  const route = useRouter();
-
   const triggerToast = useSideMenuStore((s) => s.triggerToast);
   const setUser = useUserStore((s) => s.setUser);
   const setIsAuth = useAuthStore((s) => s.setIsAuth);
@@ -52,16 +50,16 @@ export const LoginForm = ({ errorMessage }: Props) => {
     setPending(true);
     const { password, username } = data;
     const { ok, errors, user } = await login({ password, username });
-    setPending(false);
-    setIsAuth(ok);
     if (ok) {
       setUser(user!);
       triggerToast(
-        `welcome ${user?.name}`,
-        { autoClose: 1000, className: ToastStyle },
+        <p>
+          Welcome{' '}
+          <span className='font-bold'>{capitalizeText(user!.name)}</span>
+        </p>,
+        { autoClose: 2000, className: ToastStyle },
         'success'
       );
-      route.replace(`/${user?.role}`);
     } else {
       triggerToast(<NotificationError errors={errors!} />, {
         autoClose: 2500,
@@ -70,6 +68,8 @@ export const LoginForm = ({ errorMessage }: Props) => {
         closeButton: false,
       });
     }
+    setIsAuth(ok);
+    setPending(false);
   };
 
   return (

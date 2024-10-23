@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
 import { useUserStore } from '@/store/user';
 import { TopMenu } from '@/components/ui';
+import { getStaffRootUrl } from '@/utils';
 
 type Props = Readonly<{
   children: React.ReactNode;
@@ -27,8 +28,9 @@ export const DashboardClientLayout = ({ children }: Props) => {
     if (!isAuth && !isLoading) route.replace(`/auth/login`);
 
     // ? if is authenticated ensure go is page by role
-    if (isAuth && !isLoading && !pathName.startsWith(user.role)) {
-      route.replace(`/${user.role}`);
+    const url = getStaffRootUrl(user.role);
+    if (isAuth && !isLoading && !pathName.startsWith(url)) {
+      route.replace(url);
     }
   }, [pathName, isLoading, user, route, isAuth]);
 
