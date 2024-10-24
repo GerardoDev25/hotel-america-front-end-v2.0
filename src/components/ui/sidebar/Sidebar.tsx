@@ -1,11 +1,12 @@
 'use client';
-import { useSideMenuStore } from '@/store/ui';
+import { useSideMenuStore, useThemeColor } from '@/store/ui';
 import clsx from 'clsx';
+import { ThemeToggle } from '@/components/ui';
 
 export const Sidebar = () => {
   const isSideMenuOpen = useSideMenuStore((s) => s.isSideMenuOpen);
-
   const closeSideMenu = useSideMenuStore((s) => s.closeSideMenu);
+  const isDarkMode = useThemeColor((s) => s.isDarkMode);
 
   return (
     <div className=''>
@@ -28,10 +29,17 @@ export const Sidebar = () => {
 
       <nav
         className={clsx(
-          'fixed p-5 right-0 top-0 w-[250px] sm:w-[400px] h-screen bg-white z-20 shadow-2xl transform transition-all duration-300',
+          'fixed right-0 top-0 w-[250px] sm:w-[400px] h-screen bg-backgroundLight z-20 shadow-2xl transform transition-all duration-300',
           { 'translate-x-full': !isSideMenuOpen }
         )}
-      ></nav>
+      >
+        <div className='w-full p-5 flex justify-end items-center sm:h-15 h-20 bg-accent dark:bg-dark-accent'>
+          <p className={`pr-5 font-bold underline text-textDark`}>
+            {isDarkMode ? 'Dark Mode' : 'Light Mode'}
+          </p>
+          <ThemeToggle />
+        </div>
+      </nav>
     </div>
   );
 };

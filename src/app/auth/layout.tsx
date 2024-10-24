@@ -5,7 +5,8 @@ interface Props {
 }
 
 export const metadata: Metadata = {
-  title: 'Login',
+  title: 'Login - Hotel | America',
+  description: 'Administration hotel system',
 };
 
 export default async function AuthLayout({ children }: Props) {

@@ -35,7 +35,7 @@ export const DashboardClientLayout = ({ children }: Props) => {
   }, [pathName, isLoading, user, route, isAuth]);
 
   return (
-    <div className='mx-0 min-h-screen bg-backgroundLight dark:bg-dark-bg dark:text-dark-text transition-colors duration-150 ease-in-out'>
+    <div className='mx-0 min-h-screen bg-backgroundLight dark:bg-dark-bg dark:text-dark-text color-transition'>
       {isAuth && (
         <>
           <TopMenu />

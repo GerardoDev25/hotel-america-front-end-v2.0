@@ -41,8 +41,6 @@ export const useUserStore = create<State>()(
         set({ user: initialState.user });
       },
     }),
-    {
-      name: 'user-storage',
-    }
+    { name: 'user-storage' }
   )
 );

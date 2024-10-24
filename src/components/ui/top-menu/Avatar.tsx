@@ -14,7 +14,7 @@ export const Avatar = ({ name }: Props) => {
   const initials = getInitials(name);
   return (
     <div
-      className='text-textDark bg-complementary p-5 rounded-[50%] cursor-pointer hover:bg-primary hover:text-white transition-colors duration-150 ease-in-out'
+      className='text-textDark bg-complementary p-5 rounded-[50%] cursor-pointer hover:bg-primary hover:text-white color-transition'
       onClick={openSideMenu}
     >
       {initials}

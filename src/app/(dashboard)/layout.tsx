@@ -2,7 +2,7 @@ import { DashboardClientLayout } from '@/components/layout';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dashboard',
+  title: 'Dashboard - Hotel | America',
   description: 'Administration hotel system',
 };
 

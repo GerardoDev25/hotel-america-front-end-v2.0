@@ -1,26 +1,21 @@
-import type { Metadata } from 'next';
+'use client';
+
+import clsx from 'clsx';
 import { inter } from '@/config/fonts';
+import { RootClientLayout } from '@/components/layout';
+import { useThemeColor } from '@/store/ui';
 
-import { RootClientLayout } from '@/components/layout/';
 import './globals.css';
-
-export const metadata: Metadata = {
-  title: {
-    template: '%s - Hotel | America',
-    default: 'Home - Hotel | America',
-  },
-  description: 'Administration hotel system',
-};
 
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
-// todo check if server is on
 export default function RootLayout({ children }: Props) {
+  const isDarkMode = useThemeColor((s) => s.isDarkMode);
+
   return (
-    // <html lang='en' className='dark'>
-    <html lang='en'>
+    <html lang='en' className={clsx({ dark: isDarkMode })}>
       <body className={`${inter.className} antialiased`}>
         <RootClientLayout>{children}</RootClientLayout>
       </body>
