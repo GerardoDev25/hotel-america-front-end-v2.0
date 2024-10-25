@@ -9,6 +9,7 @@ import { ThemeToggle } from '@/components/ui';
 import { useUserStore } from '@/store/user';
 import { logOut } from '@/actions/auth';
 import { useAuthStore } from '@/store/auth';
+import { SidebarMenu } from './menu';
 
 export const Sidebar = () => {
   const isSideMenuOpen = useSideMenuStore((s) => s.isSideMenuOpen);
@@ -16,6 +17,7 @@ export const Sidebar = () => {
   const isDarkMode = useThemeColor((s) => s.isDarkMode);
   const resetUser = useUserStore((s) => s.resetUser);
   const setIsAuth = useAuthStore((s) => s.setIsAuth);
+  const user = useUserStore((s) => s.user);
 
   const route = useRouter();
 
@@ -70,6 +72,10 @@ export const Sidebar = () => {
             <IoLogOutOutline size={30} />
             <span className='ml-3 text-xl'>Log Out</span>
           </button>
+          {/* Divider */}
+          <div className='w-full h-px bg-gray-200 my-10' />
+          {/* Menu */}
+          <SidebarMenu role={user.role} />
         </div>
       </nav>
     </div>
