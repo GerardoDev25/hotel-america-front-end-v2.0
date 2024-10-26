@@ -1,19 +1,20 @@
+'use client';
+
 import React from 'react';
 
 import { UserRole } from '@/interfaces';
 import { SidebarAdmin, SidebarCafe, SidebarLaundry, SidebarReception } from '.';
+import { useUserStore } from '@/store/user';
 
-interface Props {
-  role: UserRole;
-}
+export const SidebarMenu = () => {
+  const user = useUserStore((s) => s.user);
 
-export const SidebarMenu = ({ role }: Props) => {
   const staffMenu: Record<UserRole, React.ReactNode> = {
-    admin: <SidebarAdmin />,
-    cafe: <SidebarCafe />,
-    laundry: <SidebarLaundry />,
-    reception: <SidebarReception />,
+    admin: <SidebarAdmin {...user} />,
+    cafe: <SidebarCafe {...user} />,
+    laundry: <SidebarLaundry {...user} />,
+    reception: <SidebarReception {...user} />,
   };
 
-  return <div>{staffMenu[role]}</div>;
+  return <div>{staffMenu[user.role]}</div>;
 };

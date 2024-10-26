@@ -17,7 +17,6 @@ export const Sidebar = () => {
   const isDarkMode = useThemeColor((s) => s.isDarkMode);
   const resetUser = useUserStore((s) => s.resetUser);
   const setIsAuth = useAuthStore((s) => s.setIsAuth);
-  const user = useUserStore((s) => s.user);
 
   const route = useRouter();
 
@@ -75,7 +74,7 @@ export const Sidebar = () => {
           {/* Divider */}
           <div className='w-full h-px bg-gray-200 my-10' />
           {/* Menu */}
-          <SidebarMenu role={user.role} />
+          <SidebarMenu />
         </div>
       </nav>
     </div>
