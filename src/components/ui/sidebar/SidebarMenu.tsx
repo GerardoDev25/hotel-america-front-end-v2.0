@@ -1,9 +1,7 @@
 'use client';
 
-import React from 'react';
-
 import { useUserStore } from '@/store/user';
-import { SidebarLinkList, LinkProperties, staffLinks } from '.';
+import { LinkProperties, staffLinks, SidebarOption } from '.';
 
 export const SidebarMenu = () => {
   const user = useUserStore((s) => s.user);
@@ -11,7 +9,9 @@ export const SidebarMenu = () => {
 
   return (
     <div className='overflow-y-auto h-[70vh] pb-52 sm:pb-10  custom-scrollbar-style'>
-      <SidebarLinkList links={links} />
+      {links.map((link) => (
+        <SidebarOption key={link.url} {...link} />
+      ))}
     </div>
   );
 };

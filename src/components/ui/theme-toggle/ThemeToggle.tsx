@@ -18,11 +18,10 @@ export const ThemeToggle = () => {
       onClick={toggleTheme}
       className={clsx(
         'p-3 rounded-full focus:outline-none hover:bg-primary group color-transition',
-        {
-          'bg-complementary': isDarkMode,
-        }
+        { 'bg-complementary': isDarkMode }
       )}
       aria-label='Toggle Dark Mode'
+      title={isDarkMode ? 'Light Mode' : 'Dark Mode'}
     >
       {isDarkMode ? (
         <FiSun className='text-textDark group-hover:text-white' size={24} />

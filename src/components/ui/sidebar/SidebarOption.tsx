@@ -10,10 +10,10 @@ export const SidebarOption = ({ url, icon, text }: LinkProperties) => {
     <Link
       href={url}
       onClick={closeSideMenu}
-      className='flex w-full items-center mt-10 p-2 hover:bg-gray-300 rounded hover:text-textDark dark:hover:bg-dark-accent'
+      className='flex w-full items-center my-2 p-4 hover:bg-gray-300 rounded hover:text-textDark dark:hover:bg-dark-accent'
     >
       {icon}
-      <span className='ml-3 text-xl'>{text}</span>
+      <span className='ml-5 text-xl'>{text}</span>
     </Link>
   );
 };
