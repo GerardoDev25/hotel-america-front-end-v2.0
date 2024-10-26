@@ -9,7 +9,7 @@ import { ThemeToggle } from '@/components/ui';
 import { useUserStore } from '@/store/user';
 import { logOut } from '@/actions/auth';
 import { useAuthStore } from '@/store/auth';
-import { SidebarMenu } from './menu';
+import { SidebarMenu } from '.';
 
 export const Sidebar = () => {
   const isSideMenuOpen = useSideMenuStore((s) => s.isSideMenuOpen);
@@ -29,7 +29,7 @@ export const Sidebar = () => {
   };
 
   return (
-    <div className=''>
+    <div>
       {/* // background black */}
 
       {isSideMenuOpen && (
@@ -49,7 +49,7 @@ export const Sidebar = () => {
 
       <nav
         className={clsx(
-          'fixed right-0 top-0 w-[250px] sm:w-[400px] h-screen bg-backgroundLight z-20 shadow-2xl transform transition-transform duration-300 dark:bg-dark-bg',
+          'fixed right-0 top-0 w-[250px] sm:w-[400px] h-screen  bg-backgroundLight z-20 shadow-2xl transform transition-transform duration-300 dark:bg-dark-bg',
           { 'translate-x-full': !isSideMenuOpen }
         )}
       >

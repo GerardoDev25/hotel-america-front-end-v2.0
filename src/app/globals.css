@@ -45,6 +45,9 @@ body {
   -webkit-animation-name: fadeIn;
   animation-name: fadeIn;
 }
+
+/* ? buttons */
+
 .btn-primary {
   @apply w-full bg-primary dark:bg-dark-bg text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors;
 }
@@ -66,4 +69,38 @@ body {
 
 .color-transition {
   @apply transition-colors duration-150 ease-in-out;
+}
+
+/* ? custom scroll */
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #68d391;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #f7fafc;
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar-thumb {
+    background-color: #38b2ac;
+    border-radius: 10px;
+  }
+
+  .custom-scrollbar-dark::-webkit-scrollbar-track {
+    background-color: #1a202c;
+  }
+}
+
+.custom-scrollbar-style {
+  @apply custom-scrollbar dark:custom-scrollbar-dark;
 }

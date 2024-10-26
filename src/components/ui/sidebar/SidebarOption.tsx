@@ -1,16 +1,10 @@
 'use client';
 
-import { useSideMenuStore } from '@/store/ui';
 import Link from 'next/link';
-import React from 'react';
+import { useSideMenuStore } from '@/store/ui';
+import { LinkProperties } from '.';
 
-interface Props {
-  url: string;
-  icon: React.ReactNode;
-  text: string;
-}
-
-export const SidebarOption = ({ url, icon, text }: Props) => {
+export const SidebarOption = ({ url, icon, text }: LinkProperties) => {
   const closeSideMenu = useSideMenuStore((s) => s.closeSideMenu);
   return (
     <Link
