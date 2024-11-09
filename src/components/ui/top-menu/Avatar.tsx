@@ -1,8 +1,9 @@
 'use client';
 
-import { useSideMenuStore } from '@/store/ui';
-import { getInitials } from '@/utils';
 import React from 'react';
+
+import { getInitials } from '@/utils';
+import { useSideMenuStore } from '@/store';
 
 interface Props {
   name: string;

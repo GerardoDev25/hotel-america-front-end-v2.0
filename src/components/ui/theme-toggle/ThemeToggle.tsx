@@ -1,6 +1,6 @@
 'use client';
 import clsx from 'clsx';
-import { useSideMenuStore, useThemeColor } from '@/store/ui';
+import { useSideMenuStore, useThemeColor } from '@/store';
 import { FiSun, FiMoon } from 'react-icons/fi';
 
 export const ThemeToggle = () => {

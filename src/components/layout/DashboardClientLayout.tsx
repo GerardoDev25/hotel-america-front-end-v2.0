@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/auth';
-import { useUserStore } from '@/store/user';
+
+import { useAuthStore, useUserStore } from '@/store';
 import { Sidebar, TopMenu } from '@/components/ui';
 import { getStaffRootUrl } from '@/utils';
 

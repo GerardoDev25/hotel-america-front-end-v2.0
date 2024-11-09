@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { useSideMenuStore } from '@/store/ui';
+
 import { LinkProperties } from '.';
+import { useSideMenuStore } from '@/store';
 
 export const SidebarOption = ({ url, icon, text }: LinkProperties) => {
   const closeSideMenu = useSideMenuStore((s) => s.closeSideMenu);

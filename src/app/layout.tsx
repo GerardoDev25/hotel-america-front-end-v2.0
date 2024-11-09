@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { inter } from '@/config/fonts';
 import { RootClientLayout } from '@/components/layout';
-import { useThemeColor } from '@/store/ui';
+import { useThemeColor } from '@/store';
 
 import './globals.css';
 

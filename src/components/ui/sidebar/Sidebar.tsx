@@ -2,9 +2,9 @@
 
 import clsx from 'clsx';
 
-import { useSideMenuStore, useThemeColor } from '@/store/ui';
-import { Divider, LogOutButton, ThemeToggle } from '@/components/ui';
 import { SidebarMenu } from '.';
+import { useSideMenuStore, useThemeColor } from '@/store';
+import { Divider, LogOutButton, ThemeToggle } from '@/components/ui';
 
 export const Sidebar = () => {
   const isSideMenuOpen = useSideMenuStore((s) => s.isSideMenuOpen);

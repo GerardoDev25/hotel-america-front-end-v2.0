@@ -1,6 +1,6 @@
 'use client';
 
-import { useUserStore } from '@/store/user';
+import { useUserStore } from '@/store';
 import { LinkProperties, staffLinks, SidebarOption } from '.';
 
 export const SidebarMenu = () => {

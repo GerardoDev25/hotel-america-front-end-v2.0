@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { ToastifyProvider } from '@/components/providers';
 import { VerifyingCredentials } from '@/components/ui';
 import { verifyTokenExpired } from '@/actions/auth';
-import { useAuthStore } from '@/store/auth';
+import { useAuthStore } from '@/store';
 
 type Props = Readonly<{
   children: React.ReactNode;

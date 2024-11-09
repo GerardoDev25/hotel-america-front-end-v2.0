@@ -2,9 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+
 import { getStaffRootUrl } from '@/utils';
-import { useAuthStore } from '@/store/auth';
-import { useUserStore } from '@/store/user';
+import { useUserStore, useAuthStore } from '@/store';
 import { LoginForm } from './ui';
 
 export default function LoginPage() {

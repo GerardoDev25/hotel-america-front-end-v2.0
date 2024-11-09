@@ -4,11 +4,9 @@ import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
-import { useNotificationStore } from '@/store/ui';
+import { useNotificationStore, useUserStore, useAuthStore } from '@/store';
 import { NotificationError, Title } from '@/components/ui';
 import { capitalizeText } from '@/utils';
-import { useUserStore } from '@/store/user';
-import { useAuthStore } from '@/store/auth';
 import { login } from '@/actions/auth';
 
 interface Props {

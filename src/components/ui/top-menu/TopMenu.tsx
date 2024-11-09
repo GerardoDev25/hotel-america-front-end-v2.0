@@ -1,9 +1,10 @@
 'use client';
 
 import React from 'react';
-import { useUserStore } from '@/store/user';
-import { TopMenuLogo, Avatar } from './';
+
 import { getStaffRole } from '@/utils';
+import { useUserStore } from '@/store';
+import { TopMenuLogo, Avatar } from './';
 
 export const TopMenu = () => {
   const user = useUserStore((state) => state.user);

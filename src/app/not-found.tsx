@@ -1,6 +1,5 @@
 'use client';
-import { useAuthStore } from '@/store/auth';
-import { useUserStore } from '@/store/user';
+import { useUserStore, useAuthStore } from '@/store';
 import { getStaffRootUrl } from '@/utils';
 // app/not-found.tsx
 

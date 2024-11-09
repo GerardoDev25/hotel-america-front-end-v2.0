@@ -1,12 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { IoLogOutOutline } from 'react-icons/io5';
 
-import { useRouter } from 'next/navigation';
-import { useSideMenuStore } from '@/store/ui';
-import { useUserStore } from '@/store/user';
 import { logOut } from '@/actions/auth';
-import { useAuthStore } from '@/store/auth';
+import { useSideMenuStore, useUserStore, useAuthStore } from '@/store';
 
 export const LogOutButton = () => {
   const resetUser = useUserStore((s) => s.resetUser);
