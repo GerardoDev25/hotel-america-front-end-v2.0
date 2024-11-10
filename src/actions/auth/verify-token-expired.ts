@@ -1,8 +1,9 @@
-import { decodeToken } from './decode-token';
+import { decodeToken, TokenDecoded } from './decode-token';
 
 interface ReturnValue {
   isTokenExpired: boolean;
   error?: string;
+  tokenDecoded?: TokenDecoded;
 }
 
 export const verifyTokenExpired = async (): Promise<ReturnValue> => {
@@ -13,5 +14,5 @@ export const verifyTokenExpired = async (): Promise<ReturnValue> => {
 
   return tokenDecoded!.exp < currentTime
     ? { isTokenExpired: true, error: 'Authentication Token expired' }
-    : { isTokenExpired: false };
+    : { isTokenExpired: false, tokenDecoded };
 };

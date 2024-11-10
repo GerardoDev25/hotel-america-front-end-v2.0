@@ -1,12 +1,12 @@
 'use client';
-import { refreshToken } from '@/actions/auth';
-import { useDelayedEffect } from '@/hooks';
+// import { refreshToken } from '@/actions/auth';
+// import { useDelayedEffect } from '@/hooks';
 
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
 export const PageClientLayout = ({ children }: Props) => {
-  useDelayedEffect(refreshToken);
+  // useDelayedEffect(refreshToken);
   return <div>{children}</div>;
 };

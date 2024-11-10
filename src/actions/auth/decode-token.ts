@@ -9,7 +9,7 @@ interface ReturnValue {
   tokenDecoded?: TokenDecoded;
 }
 
-type TokenDecoded = {
+export type TokenDecoded = {
   id: string;
   iat: number;
   exp: number;

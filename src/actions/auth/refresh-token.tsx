@@ -5,7 +5,8 @@ import { redirect } from 'next/navigation';
 import { IUser } from '@/interfaces';
 import { CronService } from '@/services';
 import { customFetch } from '@/actions/fetch';
-import { decodeToken, logOut } from './';
+import { Session } from './';
+import { TokenDecoded } from './decode-token';
 
 export interface ApiResponse {
   ok: boolean;
@@ -20,7 +21,7 @@ const setNewToken = (resp: ApiResponse) => {
   if (resp.ok) {
     cookies().set('token', resp.token!);
   } else {
-    logOut();
+    Session.logOut();
     job.stopJob('refresh-token');
     redirect(`/auth/login?errorMessage=${encodeURIComponent(resp.errors![0])}`);
   }
@@ -46,13 +47,7 @@ const getNewToken = async () => {
   setNewToken(resp);
 };
 
-export const refreshToken = async () => {
-  const { ok, error, tokenDecoded } = await decodeToken();
-
-  if (!ok) {
-    redirect(`/auth/login?errorMessage=${encodeURIComponent(error ?? '')}`);
-  }
-
+export const refreshToken = (tokenDecoded: TokenDecoded) => {
   const AN_HOUR = 3600000;
   const nowPlusAnHour = Math.floor(Date.now() / 1000) + AN_HOUR;
   const timeTokenExpired = tokenDecoded!.exp - nowPlusAnHour;

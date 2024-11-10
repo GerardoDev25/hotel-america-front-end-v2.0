@@ -3,6 +3,7 @@
 import { IUser } from '@/interfaces';
 import { customFetch } from '../fetch';
 import { cookies } from 'next/headers';
+import { CronService } from '@/services';
 // import { sleep } from '@/utils';
 
 interface Params {
@@ -33,5 +34,7 @@ export const login = async (data: Params) => {
 };
 
 export const logOut = () => {
+  const job = CronService.getInstance();
+  job.stopJob('refresh-token');
   cookies().set('token', '');
 };

@@ -1,4 +1,7 @@
-export { login, logOut } from './handle-session';
-export { decodeToken } from './decode-token';
-export { verifyTokenExpired } from './verify-token-expired';
+import { decodeToken } from './decode-token';
+import { verifyTokenExpired } from './verify-token-expired';
 export { refreshToken } from './refresh-token';
+
+export const JWT = { decodeToken, verifyTokenExpired };
+
+export * as Session from './handle-session';

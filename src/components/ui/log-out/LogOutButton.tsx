@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { IoLogOutOutline } from 'react-icons/io5';
 
-import { logOut } from '@/actions/auth';
+import { Session } from '@/actions/auth';
 import { useSideMenuStore, useUserStore, useAuthStore } from '@/store';
 
 export const LogOutButton = () => {
@@ -15,7 +15,7 @@ export const LogOutButton = () => {
   const handleLogOut = () => {
     closeSideMenu();
     resetUser();
-    logOut();
+    Session.logOut();
     setIsAuth(false);
     route.refresh();
   };
