@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { useNotificationStore, useUserStore, useAuthStore } from '@/store';
 import { NotificationError, Title } from '@/components/ui';
 import { capitalizeText } from '@/utils';
-import { Session, JWT, refreshToken } from '@/actions/auth';
+import { Session, JWT } from '@/actions/auth';
 
 interface Props {
   errorMessage?: string;
@@ -50,7 +50,7 @@ export const LoginForm = ({ errorMessage }: Props) => {
     const { ok, errors, user } = await Session.login({ password, username });
     if (ok) {
       const { tokenDecoded } = await JWT.verifyTokenExpired();
-      refreshToken(tokenDecoded!);
+      JWT.refreshToken(tokenDecoded!);
 
       setUser(user!);
       triggerToast(
