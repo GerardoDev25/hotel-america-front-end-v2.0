@@ -73,7 +73,7 @@ const getNewToken = async () => {
   }
 
   const resp: ApiResponse = await customFetch({
-    url: '/auth/refresh-token',
+    url: 'api/auth/refresh-token',
     data: { token },
     method: 'POST',
   });

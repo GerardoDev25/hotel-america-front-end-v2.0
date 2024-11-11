@@ -19,7 +19,7 @@ export interface ApiResponse {
 
 export const login = async (data: Params) => {
   const resp: ApiResponse = await customFetch({
-    url: '/auth/login',
+    url: 'api/auth/login',
     data,
     method: 'POST',
   });
