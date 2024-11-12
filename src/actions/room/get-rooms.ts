@@ -2,9 +2,9 @@
 
 import { buildPaginationQueries } from '@/utils';
 import { customFetch } from '@/actions/fetch';
-import { Pagination, RegisterPagination } from '@/interfaces';
+import { Pagination, RoomPagination } from '@/interfaces';
 
-type ReturnValue = Partial<RegisterPagination> & {
+type ReturnValue = Partial<RoomPagination> & {
   ok?: boolean;
   errors?: string[];
 };
@@ -16,8 +16,6 @@ export const getAll = async (pagination?: PaginationQueries) => {
   const queries = buildPaginationQueries(pagination!);
   let url = 'api/room';
   if (queries) url = `${url}?${queries}`;
-
-  console.log({ url });
 
   const resp: ReturnValue = await customFetch({ url });
   return resp;

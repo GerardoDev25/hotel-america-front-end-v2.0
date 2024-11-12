@@ -17,6 +17,8 @@ const config: Config = {
         primary: '#2C7A7B', // Primary green
         accent: '#68D391', // Brighter accent green for light mode
         backgroundLight: '#F7FAFC', // Light background
+        'backgroundLight-dark': '#E2E8F0', // Slightly darker version for hover
+        'backgroundLight-green': '#E6FFFA', // Light green for hover
         textDark: '#2D3748', // Dark text
         complementary: '#F6AD55', // Soft orange accent
 
@@ -24,6 +26,7 @@ const config: Config = {
         'dark-primary': '#2C7A7B', // Primary green for dark mode (same as light)
         'dark-accent': '#38B2AC', // Softer teal-green accent for dark mode
         'dark-bg': '#1A202C', // Dark background
+        'dark-bg-light': '#2D3748', // Slightly lighter version for hover
         'dark-text': '#E2E8F0', // Light text for dark mode
         'dark-complementary': '#F6AD55', // Same complementary soft orange
       },

@@ -16,8 +16,6 @@ export const getAll = async (pagination?: Pagination) => {
   let url = 'api/register';
   if (queries) url = `${url}?${queries}`;
 
-  console.log({ url });
-
   const resp: ReturnValue = await customFetch({ url });
   return resp;
 };

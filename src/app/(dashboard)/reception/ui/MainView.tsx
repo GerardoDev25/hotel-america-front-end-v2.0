@@ -1,15 +1,12 @@
 import { Room } from '@/actions';
+import { RoomGrid } from './';
 
 export const MainView = async () => {
-  const registers = await Room.getAll({
-    page: 2,
-    limit: 7,
-    isAvailable: false,
-  });
+  const registers = await Room.getAll({ page: 2, limit: 12 });
 
   return (
     <div>
-      <pre>{JSON.stringify(registers, null, 2)}</pre>
+      <RoomGrid rooms={registers.rooms!} />
     </div>
   );
 };
