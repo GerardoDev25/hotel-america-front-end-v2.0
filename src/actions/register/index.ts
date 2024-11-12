@@ -1,1 +1,1 @@
-export { getAll } from './get-all-register';
+export { getAll } from './get-register';
