@@ -19,14 +19,12 @@ export const RoomItem: React.FC<Props> = ({ room }) => {
         }
       )}
     >
-      <h2 className='w-2/3 text-xl font-bold text-primary dark:text-dark-primary mb-2 '>
-        <span className='underline underline-offset-4'>
-          Room {room.roomNumber}
-        </span>
-        <span className='pb-4 pl-2'>({room.roomType})</span>
+      <h2 className='w-1/2 text-xl text-center font-bold text-primary dark:text-dark-primary mb-2 '>
+        <span className=' text-6xl'>{room.roomNumber}</span>
+        <p>({room.roomType})</p>
       </h2>
-      <div className='w-1/3'>
-        <p className='pb-4'>Beds: {room.betsNumber}</p>
+      <div className='w-1/2'>
+        <p className='pb-4 text-md'>Beds: {room.betsNumber}</p>
         <p className='pb-4'>Status: {<RoomStateTag state={room.state} />}</p>
         <p
           className={clsx(`pb-4 font-bold text-accent`, {
@@ -40,16 +38,21 @@ export const RoomItem: React.FC<Props> = ({ room }) => {
   );
 };
 
-export const RoomStateTag: React.FC<StateTagProps> = ({ state }) => {
+const RoomStateTag: React.FC<StateTagProps> = ({ state }) => {
+  const tag = state.replaceAll('_', ' ');
   return (
     <span
-      className={clsx('px-2 py-1 rounded-lg bg-primary', {
-        'bg-red-400': state === 'under_maintenance',
-        'bg-complementary':
-          state === 'occupied' || state === 'pending_cleaning',
-      })}
+      className={clsx(
+        'inline-block px-2 py-1 rounded-lg font-bold text-white',
+        {
+          'dark:bg-primary bg-primary': state === 'free',
+          'dark:bg-red-500 bg-red-500': state === 'under_maintenance',
+          'dark:bg-dark-complementary bg-complementary dark:text-dark-bg-light':
+            state === 'occupied' || state === 'pending_cleaning',
+        }
+      )}
     >
-      {state}
+      {tag}
     </span>
   );
 };

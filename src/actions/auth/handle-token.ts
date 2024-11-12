@@ -54,6 +54,7 @@ const setNewToken = (resp: ApiResponse) => {
 
   if (resp.ok) {
     cookies().set('token', resp.token!);
+    console.log('token refreshed');
   } else {
     Session.logOut();
     job.stopJob('refresh-token');

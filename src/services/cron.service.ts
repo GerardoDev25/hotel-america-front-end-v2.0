@@ -1,6 +1,6 @@
 import { CronJob } from 'cron';
 
-type OnTick = () => void;
+type OnTick = () => void | Promise<void>;
 type CronType = string | Date;
 type CronJobId = 'refresh-token';
 
