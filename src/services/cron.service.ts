@@ -2,7 +2,7 @@ import { CronJob } from 'cron';
 
 type OnTick = () => void | Promise<void>;
 type CronType = string | Date;
-type CronJobId = 'refresh-token';
+type CronJobId = 'refresh-token' | 'check-token-in-cookies';
 
 export class CronService {
   private static instance: CronService;

@@ -1,6 +1,6 @@
 export const RoomItemSkeleton: React.FC = () => {
   return (
-    <div className='flex justify-around items-center p-4 rounded-lg shadow-2xl bg-backgroundLight dark:bg-dark-bg border-l-4 border-accent cursor-pointer animate-pulse'>
+    <div className='flex justify-around items-center p-4 rounded-lg shadow-2xl bg-backgroundLight dark:bg-dark-bg border-l-4 border-accent animate-pulse'>
       {/* Skeleton for the room number and type */}
       <div className='w-1/2 text-center'>
         <div className='h-10 bg-gray-300 dark:bg-gray-700 rounded w-1/2 mx-auto mb-2'></div>

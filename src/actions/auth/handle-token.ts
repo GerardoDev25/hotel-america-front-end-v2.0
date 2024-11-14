@@ -1,13 +1,12 @@
 'use server';
 
-import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { jwtDecode } from 'jwt-decode';
 
 import { IUser } from '@/interfaces';
 import { CronService } from '@/services';
 import { customFetch } from '@/actions/fetch';
-import { Session } from './';
+// import { Session } from './';
 
 interface DecodeTokenReturn {
   ok: boolean;
@@ -49,29 +48,8 @@ export const decodeToken = async (): Promise<DecodeTokenReturn> => {
   }
 };
 
-const setNewToken = (resp: ApiResponse) => {
-  const job = CronService.getInstance();
-
-  if (resp.ok) {
-    cookies().set('token', resp.token!);
-    console.log('token refreshed');
-  } else {
-    Session.logOut();
-    job.stopJob('refresh-token');
-    redirect(`/auth/login?errorMessage=${encodeURIComponent(resp.errors![0])}`);
-  }
-};
-
-const getNewToken = async () => {
-  const token = cookies().get('token')?.value;
-
-  if (token === undefined || token.length === 0) {
-    redirect(
-      `/auth/login?errorMessage=${encodeURIComponent(
-        'token invalid or expired'
-      )}`
-    );
-  }
+async function getNewToken() {
+  const token = cookies().get('token')?.value ?? '';
 
   const resp: ApiResponse = await customFetch({
     url: 'api/auth/refresh-token',
@@ -79,9 +57,18 @@ const getNewToken = async () => {
     method: 'POST',
   });
 
-  setNewToken(resp);
-};
+  if (!resp.ok) {
+    const job = CronService.getInstance();
+    cookies().set('token', '');
+    console.log('token expired');
+    job.stopJob('refresh-token');
+    return;
+  }
+  cookies().set('token', resp.token!);
+  console.log('token refreshed');
+}
 
+// todo this mierda should stay in the client site
 export const refreshToken = (tokenDecoded: TokenDecoded) => {
   const AN_HOUR = 3600000;
   const nowPlusAnHour = Math.floor(Date.now() / 1000) + AN_HOUR;
@@ -92,7 +79,8 @@ export const refreshToken = (tokenDecoded: TokenDecoded) => {
   }
 
   const job = CronService.getInstance();
-  job.startJob('refresh-token', '0 * * * *', getNewToken);
+  job.startJob('refresh-token', '*/5 * * * * *', getNewToken);
+  // job.startJob('refresh-token', '0 * * * *', getNewToken);
 };
 
 export const verifyTokenExpired =
