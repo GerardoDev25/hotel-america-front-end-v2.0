@@ -17,9 +17,6 @@ export const RootClientLayout = ({ children }: Props) => {
   useEffect(() => {
     const handleTokenExpired = async () => {
       const { isTokenExpired } = await JWT.verifyTokenExpired();
-      // if (!isTokenExpired) {
-      //   JWT.refreshToken(tokenDecoded!);
-      // }
       setIsAuth(!isTokenExpired);
       setIsTokenValidating(false);
     };

@@ -9,7 +9,7 @@ const rooms = [
   { id: 'b31f3cd1-22a5-45e1-825b-9298a723e0d6' },
 ];
 
-export const MainViewSkeleton = async () => {
+export const MainViewSkeleton = () => {
   return (
     <div>
       <div className='grid grid-cols-1 gap-10  md:grid-cols-2 lg:grid-cols-3'>

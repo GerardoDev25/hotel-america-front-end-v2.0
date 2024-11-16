@@ -6,14 +6,23 @@ interface State {
     content: ToastContent<unknown>,
     options?: ToastOptions<unknown>,
     type?: ToastType
-  ) => void;
+  ) => string | number;
+
+  clearAllNotifications: () => void;
+  clearNotificationById: (id: string | number) => void;
 }
 
 type ToastType = 'info' | 'success' | 'warning' | 'error';
 
 export const useNotificationStore = create<State>()(() => ({
   triggerToast: (content, options, type) => {
-    if (type) toast[type](content, options);
-    else toast(content, options);
+    if (type) return toast[type](content, options);
+    else return toast(content, options);
+  },
+  clearAllNotifications: () => {
+    toast.dismiss();
+  },
+  clearNotificationById: (id: string | number) => {
+    toast.dismiss(id);
   },
 }));

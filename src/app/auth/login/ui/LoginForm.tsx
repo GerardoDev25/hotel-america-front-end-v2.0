@@ -51,7 +51,7 @@ export const LoginForm = ({ errorMessage }: Props) => {
       setUser(user!);
       triggerToast(
         <NotificationLogin name={user!.name} />,
-        { autoClose: 2000, className: ToastStyle },
+        { autoClose: 2000, className: ToastStyle, closeButton: false },
         'success'
       );
     } else {

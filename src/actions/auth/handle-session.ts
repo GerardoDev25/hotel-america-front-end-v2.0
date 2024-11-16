@@ -2,7 +2,6 @@
 
 import { cookies } from 'next/headers';
 import { IUser } from '@/interfaces';
-import { CronService } from '@/services';
 import { customFetch } from '@/actions/fetch';
 
 interface Params {
@@ -32,8 +31,6 @@ export const login = async (data: Params) => {
 };
 
 export const logOut = () => {
-  const job = CronService.getInstance();
-  job.stopJob('refresh-token');
   cookies().set('token', '');
 };
 

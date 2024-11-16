@@ -17,7 +17,7 @@ export const LogOutButton = () => {
     resetUser();
     Session.logOut();
     setIsAuth(false);
-    route.refresh();
+    route.replace('/auth/login');
   };
 
   return (

@@ -1,23 +1,25 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
-import { useAuthStore, useNotificationStore, useUserStore } from '@/store';
-import { NotificationError, Sidebar, TopMenu } from '@/components/ui';
 import { getStaffRootUrl } from '@/utils';
-import { JWT, Session } from '@/actions/auth';
 import { useDelayedEffect } from '@/hooks';
+import { JWT, Session } from '@/actions/auth';
+import { NotificationError, Sidebar, TopMenu } from '@/components/ui';
+import { useAuthStore, useNotificationStore, useUserStore } from '@/store';
 
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
-const HALF_AN_HOUR = 1800000;
+const HALF_AN_HOUR = 1_800_000;
+const ToastStyle =
+  'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400';
 
 export const DashboardClientLayout = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
+  const notificationId = useRef<number | string>(0);
 
   const route = useRouter();
   const pathName = usePathname();
@@ -26,6 +28,26 @@ export const DashboardClientLayout = ({ children }: Props) => {
   const user = useUserStore((s) => s.user);
 
   const triggerToast = useNotificationStore((s) => s.triggerToast);
+  const clearNotificationById = useNotificationStore(
+    (s) => s.clearNotificationById
+  );
+
+  const refreshToken = useCallback(async () => {
+    if (notificationId.current) clearNotificationById(notificationId.current);
+    const { ok, errors } = await Session.refresh();
+
+    if (!ok) {
+      notificationId.current = triggerToast(
+        <NotificationError errors={errors!} />,
+        {
+          autoClose: false,
+          position: 'top-center',
+          className: ToastStyle,
+        }
+      );
+      console.log(notificationId);
+    }
+  }, [triggerToast, clearNotificationById]);
 
   useEffect(() => {
     setIsLoading(false);
@@ -42,36 +64,25 @@ export const DashboardClientLayout = ({ children }: Props) => {
     }
   }, [pathName, isLoading, user, route, isAuth]);
 
-  // ? refresh token
-  const refreshToken = useCallback(async () => {
-    const { ok, errors } = await Session.refresh();
-    console.log({ ok });
-    if (!ok) {
-      triggerToast(<NotificationError errors={errors!} />, {
-        autoClose: false,
-        position: 'top-center',
-        className:
-          'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400',
-      });
-    }
-  }, [triggerToast]);
-
   // ? refresh token if it expires in less than half an hour
   useDelayedEffect(async () => {
-    const { ok, error, tokenDecoded } = await JWT.decodeToken();
+    const {
+      ok,
+      error = 'Authentication Failed',
+      tokenDecoded,
+    } = await JWT.decodeToken();
     if (!ok) {
-      triggerToast(<NotificationError errors={[error!]} />, {
+      triggerToast(<NotificationError errors={[error]} />, {
         autoClose: false,
         position: 'top-center',
-        className:
-          'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400',
+        className: ToastStyle,
       });
     } else {
       const halfAnHourMore = Math.floor(Date.now() / 1000) + HALF_AN_HOUR;
       const timeTokenExpired = tokenDecoded!.exp - halfAnHourMore;
 
       if (timeTokenExpired > 0) {
-        refreshToken();
+        await refreshToken();
       }
     }
   });

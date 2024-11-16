@@ -3,11 +3,6 @@
 import { cookies } from 'next/headers';
 import { jwtDecode } from 'jwt-decode';
 
-import { IUser } from '@/interfaces';
-import { CronService } from '@/services';
-import { customFetch } from '@/actions/fetch';
-// import { Session } from './';
-
 interface DecodeTokenReturn {
   ok: boolean;
   error?: string;
@@ -20,13 +15,6 @@ type TokenDecoded = {
   exp: number;
 };
 
-interface ApiResponse {
-  ok: boolean;
-  user?: IUser;
-  token?: string;
-  errors?: string[];
-}
-
 interface VerifyTokenExpiredReturn {
   isTokenExpired: boolean;
   error?: string;
@@ -35,52 +23,16 @@ interface VerifyTokenExpiredReturn {
 
 export const decodeToken = async (): Promise<DecodeTokenReturn> => {
   try {
-    const token = cookies().get('token')?.value;
-
-    if (!token) throw 'No Authentication token provided';
+    const token = cookies().get('token')?.value ?? '';
 
     const tokenDecoded = jwtDecode<TokenDecoded>(token);
     if (!tokenDecoded) throw 'Invalid Authentication token';
 
     return { ok: true, tokenDecoded };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    return { ok: false, error: (error as Error).message };
+    return { ok: false, error: 'Invalid Token Authentication' };
   }
-};
-
-async function getNewToken() {
-  const token = cookies().get('token')?.value ?? '';
-
-  const resp: ApiResponse = await customFetch({
-    url: 'api/auth/refresh-token',
-    data: { token },
-    method: 'POST',
-  });
-
-  if (!resp.ok) {
-    const job = CronService.getInstance();
-    cookies().set('token', '');
-    console.log('token expired');
-    job.stopJob('refresh-token');
-    return;
-  }
-  cookies().set('token', resp.token!);
-  console.log('token refreshed');
-}
-
-// todo this mierda should stay in the client site
-export const refreshToken = (tokenDecoded: TokenDecoded) => {
-  const AN_HOUR = 3600000;
-  const nowPlusAnHour = Math.floor(Date.now() / 1000) + AN_HOUR;
-  const timeTokenExpired = tokenDecoded!.exp - nowPlusAnHour;
-
-  if (timeTokenExpired > 0) {
-    getNewToken();
-  }
-
-  const job = CronService.getInstance();
-  job.startJob('refresh-token', '*/5 * * * * *', getNewToken);
-  // job.startJob('refresh-token', '0 * * * *', getNewToken);
 };
 
 export const verifyTokenExpired =

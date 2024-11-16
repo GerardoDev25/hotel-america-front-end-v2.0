@@ -1,4 +1,5 @@
 import { BiMessageError } from 'react-icons/bi';
+import { Divider } from '@/components/ui';
 
 interface Props {
   errors: string[];
@@ -14,8 +15,7 @@ export const NotificationError = ({ errors }: Props) => {
         </h3>
       </div>
 
-      {/* Divider */}
-      <div className='w-full h-px bg-gray-200 my-2' />
+      <Divider />
 
       <p className='text- text-gray-500 mb-2'>Errors:</p>
 
