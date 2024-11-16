@@ -1,10 +1,11 @@
 'use client';
 
+import clsx from 'clsx';
 import Link from 'next/link';
 import { redirect, usePathname, useSearchParams } from 'next/navigation';
-import clsx from 'clsx';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
+import { ArrowButton } from './ArrowButton';
 import { generatePaginationNumbers } from '@/utils';
 
 interface Props {
@@ -41,25 +42,21 @@ export const Pagination = ({ totalPages }: Props) => {
   };
 
   return (
-    <div className='flex text-center  justify-center mt-10 mb-12'>
+    <div className='flex text-center justify-center mt-10 mb-12'>
       <nav aria-label='Page navigation example'>
         <ul className='flex list-style-none'>
-          <li className='page-item '>
-            <Link
-              className='page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none'
-              href={createPageUrl(currentPage - 1)}
-            >
-              <IoChevronBackOutline />
-            </Link>
-          </li>
+          <ArrowButton
+            href={createPageUrl(currentPage - 1)}
+            icon={<IoChevronBackOutline />}
+          />
 
           {allPages.map((page, index) => (
             <li key={`${page} - ${index}`} className='page-item'>
               <Link
                 className={clsx(
-                  'page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none',
+                  'flex justify-center items-center w-10 h-10 page-link py-1.5 px-3 border-0 rounded color-transition bg-backgroundLight-dark hover:bg-backgroundLight-green dark:bg-dark-bg dark:hover:bg-dark-bg-light',
                   {
-                    'bg-blue-600 shadow-sm text-white hover:text-white hover:bg-blue-700':
+                    'text-primary dark:text-accent font-bold':
                       page === currentPage,
                   }
                 )}
@@ -70,14 +67,10 @@ export const Pagination = ({ totalPages }: Props) => {
             </li>
           ))}
 
-          <li className='page-item'>
-            <Link
-              className='page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none'
-              href={createPageUrl(currentPage + 1)}
-            >
-              <IoChevronForwardOutline />
-            </Link>
-          </li>
+          <ArrowButton
+            href={createPageUrl(currentPage + 1)}
+            icon={<IoChevronForwardOutline />}
+          />
         </ul>
       </nav>
     </div>
