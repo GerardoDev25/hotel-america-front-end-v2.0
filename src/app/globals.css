@@ -104,3 +104,17 @@ body {
 .custom-scrollbar-style {
   @apply custom-scrollbar dark:custom-scrollbar-dark;
 }
+
+/* * Toastify overwrite classes */
+.Toastify__close-button--light {
+  color: red !important;
+  font-weight: bold;
+  height: 1rem;
+  width: 1rem;
+}
+
+.Toastify__close-button > svg {
+  fill: currentColor;
+  height: 1rem !important;
+  width: 1rem !important;
+}

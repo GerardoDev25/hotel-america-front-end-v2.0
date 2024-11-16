@@ -36,3 +36,24 @@ export const logOut = () => {
   job.stopJob('refresh-token');
   cookies().set('token', '');
 };
+
+export const refresh = async () => {
+  const token = cookies().get('token')?.value ?? '';
+
+  const resp: ApiResponse = await customFetch({
+    url: 'api/auth/refresh-token',
+    data: { token },
+    method: 'POST',
+  });
+
+  if (resp.ok) {
+    cookies().set('token', resp.token!);
+    console.log('token refreshed');
+  }
+
+  if (resp.errors) {
+    resp.errors.push('please Log-out and Log-in again');
+  }
+
+  return resp;
+};

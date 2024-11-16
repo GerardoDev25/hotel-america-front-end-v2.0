@@ -5,9 +5,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import clsx from 'clsx';
 
 import { useNotificationStore, useUserStore, useAuthStore } from '@/store';
-import { NotificationError, Title } from '@/components/ui';
-import { capitalizeText } from '@/utils';
-import { Session, JWT } from '@/actions/auth';
+import { NotificationError, NotificationLogin, Title } from '@/components/ui';
+import { Session } from '@/actions/auth';
 
 interface Props {
   errorMessage?: string;
@@ -49,15 +48,9 @@ export const LoginForm = ({ errorMessage }: Props) => {
     const { password, username } = data;
     const { ok, errors, user } = await Session.login({ password, username });
     if (ok) {
-      const { tokenDecoded } = await JWT.verifyTokenExpired();
-      JWT.refreshToken(tokenDecoded!);
-
       setUser(user!);
       triggerToast(
-        <p>
-          Welcome{' '}
-          <span className='font-bold'>{capitalizeText(user!.name)}</span>
-        </p>,
+        <NotificationLogin name={user!.name} />,
         { autoClose: 2000, className: ToastStyle },
         'success'
       );

@@ -1,28 +1,31 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
-import { useAuthStore, useUserStore } from '@/store';
-import { Sidebar, TopMenu } from '@/components/ui';
-import { getStaffRootUrl, getTokenFromCookies } from '@/utils';
-import { jwtDecode } from 'jwt-decode';
-import { Session } from '@/actions/auth';
-// import { CronService } from '@/services';
+import { useAuthStore, useNotificationStore, useUserStore } from '@/store';
+import { NotificationError, Sidebar, TopMenu } from '@/components/ui';
+import { getStaffRootUrl } from '@/utils';
+import { JWT, Session } from '@/actions/auth';
+import { useDelayedEffect } from '@/hooks';
 
 type Props = Readonly<{
   children: React.ReactNode;
 }>;
 
+const HALF_AN_HOUR = 1800000;
+
 export const DashboardClientLayout = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const setIsAuth = useAuthStore((s) => s.setIsAuth);
-  const isAuth = useAuthStore((s) => s.isAuth);
-  const resetUser = useUserStore((s) => s.resetUser);
-  const user = useUserStore((s) => s.user);
+
   const route = useRouter();
   const pathName = usePathname();
+
+  const isAuth = useAuthStore((s) => s.isAuth);
+  const user = useUserStore((s) => s.user);
+
+  const triggerToast = useNotificationStore((s) => s.triggerToast);
 
   useEffect(() => {
     setIsLoading(false);
@@ -39,24 +42,45 @@ export const DashboardClientLayout = ({ children }: Props) => {
     }
   }, [pathName, isLoading, user, route, isAuth]);
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      const token = getTokenFromCookies('token') || '';
-      const isTokenValid = jwtDecode(token);
-      if (!isTokenValid) {
-        resetUser();
-        Session.logOut();
-        setIsAuth(false);
-        route.replace(
-          `/auth/login?errorMessage=${encodeURIComponent(
-            'Credentials invalid'
-          )}`
-        );
+  // ? refresh token
+  const refreshToken = useCallback(async () => {
+    const { ok, errors } = await Session.refresh();
+    console.log({ ok });
+    if (!ok) {
+      triggerToast(<NotificationError errors={errors!} />, {
+        autoClose: false,
+        position: 'top-center',
+        className:
+          'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400',
+      });
+    }
+  }, [triggerToast]);
+
+  // ? refresh token if it expires in less than half an hour
+  useDelayedEffect(async () => {
+    const { ok, error, tokenDecoded } = await JWT.decodeToken();
+    if (!ok) {
+      triggerToast(<NotificationError errors={[error!]} />, {
+        autoClose: false,
+        position: 'top-center',
+        className:
+          'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400',
+      });
+    } else {
+      const halfAnHourMore = Math.floor(Date.now() / 1000) + HALF_AN_HOUR;
+      const timeTokenExpired = tokenDecoded!.exp - halfAnHourMore;
+
+      if (timeTokenExpired > 0) {
+        refreshToken();
       }
-      // }, 60000);
-    }, 1000);
+    }
+  });
+
+  // ? refresh token every half an hour
+  useEffect(() => {
+    const intervalId = setInterval(refreshToken, HALF_AN_HOUR);
     return () => clearInterval(intervalId);
-  }, [resetUser, setIsAuth, route]);
+  }, [triggerToast, refreshToken]);
 
   return (
     <div className='mx-0 min-h-screen bg-backgroundLight dark:bg-dark-bg dark:text-dark-text color-transition'>

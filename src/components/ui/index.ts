@@ -1,6 +1,6 @@
 export * from './divider/Divider';
 export * from './log-out/LogOutButton';
-export * from './error/NotificationError';
+export * from './error';
 export * from './profile/Profile';
 export * from './sidebar';
 export * from './theme-toggle/ThemeToggle';

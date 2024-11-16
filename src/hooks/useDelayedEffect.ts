@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 
-export function useDelayedEffect(callback: () => void, delay = 0) {
+type Callback = () => void;
+
+export function useDelayedEffect(callback: Callback, delay: number = 0) {
   useEffect(() => {
     const timer = setTimeout(() => {
       callback();
