@@ -2,9 +2,10 @@
 
 import clsx from 'clsx';
 import Link from 'next/link';
-import { redirect, usePathname, useSearchParams } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
 
+import { useGetPageParam } from '@/hooks';
 import { ArrowButton } from './ArrowButton';
 import { generatePaginationNumbers } from '@/utils';
 
@@ -15,11 +16,7 @@ interface Props {
 export const Pagination = ({ totalPages }: Props) => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-
-  const pageString = searchParams.get('page') ?? 1;
-  const currentPage = isNaN(+pageString) ? 1 : +pageString;
-
-  if (currentPage < 1 || isNaN(+pageString)) redirect(pathName);
+  const currentPage = useGetPageParam();
 
   const allPages = generatePaginationNumbers(currentPage, totalPages);
 
@@ -42,7 +39,7 @@ export const Pagination = ({ totalPages }: Props) => {
   };
 
   return (
-    <div className='flex text-center justify-center mt-10 mb-12'>
+    <div className=' flex text-center justify-center mt-auto pt-10 mb-12'>
       <nav aria-label='Page navigation example'>
         <ul className='flex list-style-none'>
           <ArrowButton
@@ -54,7 +51,7 @@ export const Pagination = ({ totalPages }: Props) => {
             <li key={`${page} - ${index}`} className='page-item'>
               <Link
                 className={clsx(
-                  'flex justify-center items-center w-10 h-10 page-link py-1.5 px-3 border-0 rounded color-transition bg-backgroundLight-dark hover:bg-backgroundLight-green dark:bg-dark-bg dark:hover:bg-dark-bg-light',
+                  'flex justify-center items-center w-9 h-9 sm:w-10 sm:h-10 page-link py-1.5 px-3 border-0 rounded color-transition bg-backgroundLight-dark hover:bg-backgroundLight-green dark:bg-dark-bg dark:hover:bg-dark-bg-light',
                   {
                     'text-primary dark:text-accent font-bold':
                       page === currentPage,
