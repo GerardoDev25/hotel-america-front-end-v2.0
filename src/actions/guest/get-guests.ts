@@ -1,7 +1,7 @@
 'use server';
 
 import { buildPaginationQueries } from '@/utils';
-import { sleep } from '@/utils';
+// import { sleep } from '@/utils';
 import { customFetch } from '@/actions/fetch';
 import { Pagination, GuestPagination } from '@/interfaces';
 
@@ -11,7 +11,7 @@ type ReturnValue = Partial<GuestPagination> & {
 };
 
 export const getAll = async (pagination?: Pagination) => {
-  await sleep(5);
+  // await sleep(5);
   const queries = buildPaginationQueries(pagination!);
   let url = 'api/guest';
   if (queries) url = `${url}?${queries}`;
