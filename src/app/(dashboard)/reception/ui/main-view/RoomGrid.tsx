@@ -6,31 +6,30 @@ import { useEffect, useState } from 'react';
 import { Room } from '@/actions';
 
 interface Props {
+  limit: number;
   page: number;
   setTotalPages: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const limit = 12;
-
-const getRooms = async (page: number) => {
+const getRooms = async (page: number, limit: number) => {
   const { rooms = [], ...rest } = await Room.getAll({ page, limit });
 
   return { rooms, ...rest };
 };
 
-export const RoomGrid = ({ page, setTotalPages }: Props) => {
+export const RoomGrid = ({ page, limit, setTotalPages }: Props) => {
   const [rooms, setRooms] = useState<IRoom[]>([]);
   const [isFetchingData, setIsFetchingData] = useState(false);
 
   useEffect(() => {
     setIsFetchingData(true);
-    getRooms(page)
+    getRooms(page, limit)
       .then(({ rooms, total }) => {
         setRooms(rooms);
         setTotalPages(Math.ceil(total! / limit));
       })
       .finally(() => setIsFetchingData(false));
-  }, [page, setTotalPages]);
+  }, [page, limit, setTotalPages]);
 
   if (isFetchingData) {
     return <MainViewSkeleton />;
