@@ -1,4 +1,4 @@
-export * from './divider/Divider';
+export { DividerX, DividerY } from './divider/Divider';
 export * from './log-out/LogOutButton';
 export * from './error';
 export * from './profile/Profile';

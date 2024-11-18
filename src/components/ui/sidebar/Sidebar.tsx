@@ -4,7 +4,7 @@ import clsx from 'clsx';
 
 import { SidebarMenu } from '.';
 import { useSideMenuStore, useThemeColor } from '@/store';
-import { Divider, LogOutButton, ThemeToggle } from '@/components/ui';
+import { DividerX, LogOutButton, ThemeToggle } from '@/components/ui';
 
 export const Sidebar = () => {
   const isSideMenuOpen = useSideMenuStore((s) => s.isSideMenuOpen);
@@ -45,7 +45,7 @@ export const Sidebar = () => {
         {/* sidebar menu */}
         <div className='px-5'>
           <LogOutButton />
-          <Divider />
+          <DividerX />
           <SidebarMenu />
         </div>
       </nav>
