@@ -4,6 +4,7 @@ import { Guest } from '@/actions';
 import { IGuest } from '@/interfaces';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { SkeletonGuestTable } from '../../guests/ui';
 
 interface Props {
   limit: number;
@@ -31,7 +32,7 @@ export const GuestTable = ({ page, limit, setTotalPages }: Props) => {
   }, [page, limit, setTotalPages]);
 
   if (isFetchingData) {
-    return <></>;
+    return <SkeletonGuestTable />;
   }
   return (
     <div className='overflow-x-auto custom-scrollbar-style'>
