@@ -1,5 +1,6 @@
 import { IRoom, RoomState } from '@/interfaces';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 interface Props {
   room: IRoom;
@@ -10,8 +11,14 @@ interface StateTagProps {
 }
 
 export const RoomItem: React.FC<Props> = ({ room }) => {
+  const url =
+    room.state === 'occupied'
+      ? `/reception/register/${room.id}?isRoomId=true`
+      : `/reception/room/${room.id}`;
+
   return (
-    <div
+    <Link
+      href={url}
       className={clsx(
         `flex justify-around items-center p-4 rounded-lg shadow-2xl bg-backgroundLight dark:bg-dark-bg text-textDark dark:text-dark-text border-l-4 border-accent cursor-pointer hover:bg-backgroundLight-green hover:dark:bg-dark-bg-light color-transition`,
         {
@@ -34,7 +41,7 @@ export const RoomItem: React.FC<Props> = ({ room }) => {
           {room.isAvailable ? 'Available' : 'Unavailable'}
         </p>
       </div>
-    </div>
+    </Link>
   );
 };
 
