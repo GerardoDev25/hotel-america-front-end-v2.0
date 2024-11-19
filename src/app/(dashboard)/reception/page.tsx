@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { IoAddOutline } from 'react-icons/io5';
+
 import { RoomGrid } from './ui/main-view';
 import { useGetPageParam } from '@/hooks';
 import { Pagination, Title } from '@/components/ui';
@@ -13,7 +15,13 @@ export default function ReceptionPage() {
 
   return (
     <div className='min-h-[calc(100vh-8rem)] flex flex-col'>
-      <Title title={'Room List'} />
+      <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
+        <Title title={'Room Management'} />
+        <button className='flex items-center px-4 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-accent dark:bg-dark-primary dark:text-dark-text dark:hover:bg-dark-accent dark:focus:ring-dark-accent'>
+          <IoAddOutline />
+          <span className='pl-2'>Create Room</span>
+        </button>
+      </div>
       <RoomGrid
         setTotalPages={setTotalPages}
         page={currentPage}
