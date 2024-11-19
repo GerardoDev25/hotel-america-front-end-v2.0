@@ -6,6 +6,7 @@ import { customFetch } from '@/actions/fetch';
 import { Pagination, GuestPagination } from '@/interfaces';
 
 type ReturnValue = Partial<GuestPagination> & {
+  code: number;
   ok?: boolean;
   errors?: string[];
 };

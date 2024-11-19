@@ -1,7 +1,5 @@
+import { SkeletonLoadingPage } from '@/components/ui';
+
 export default function LoadingPage() {
-  return (
-    <div>
-      <h1>Loading room page</h1>
-    </div>
-  );
+  return <SkeletonLoadingPage />;
 }

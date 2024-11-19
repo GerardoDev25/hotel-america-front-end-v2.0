@@ -34,13 +34,15 @@ export const customFetch = async (params: Params) => {
     const resp = await fetch(`${envs.BACK_END_URL}${url}`, {
       ...requestOptions,
       cache: isCache ? 'force-cache' : 'no-cache',
-    }).then((res) => res.text());
+    });
+    const data = await resp.text();
 
-    return JSON.parse(resp);
+    return { ...JSON.parse(data), code: resp.status };
   } catch (error) {
     return {
       ok: false,
       errors: [`${(error as Error).message} couldn't connect with server`],
+      code: 500,
     };
   }
 };

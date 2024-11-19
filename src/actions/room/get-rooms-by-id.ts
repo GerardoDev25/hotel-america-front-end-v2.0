@@ -5,6 +5,7 @@ import { customFetch } from '@/actions/fetch';
 import { IRoom } from '@/interfaces';
 
 type ReturnValue = {
+  code: number;
   room?: IRoom;
   ok?: boolean;
   errors?: string[];

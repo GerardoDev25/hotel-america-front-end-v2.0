@@ -5,6 +5,7 @@ import { customFetch } from '@/actions/fetch';
 import { Pagination, RegisterPagination } from '@/interfaces';
 
 type ReturnValue = Partial<RegisterPagination> & {
+  code: number;
   ok?: boolean;
   errors?: string[];
 };

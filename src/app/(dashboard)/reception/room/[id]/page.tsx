@@ -1,5 +1,5 @@
 import { Room } from '@/actions';
-import { ErrorPage } from '@/components/ui';
+import { ErrorPageStandard } from '@/components/ui';
 
 interface Props {
   params: { id: string };
@@ -7,15 +7,10 @@ interface Props {
 
 export default async function RegisterRoomPage({ params }: Props) {
   const { id } = params;
-  const { room, ok, errors } = await Room.getById(id);
+  const { room, ok, errors, code } = await Room.getById(id);
 
   if (!ok) {
-    const isNotFound = errors![0].includes(id);
-    const titleMessage = isNotFound ? 'Room not found' : 'Something went wrong';
-    const code = isNotFound ? 404 : 500;
-    return (
-      <ErrorPage code={code} titleMessage={titleMessage} legend={errors![0]} />
-    );
+    return <ErrorPageStandard code={code} legends={errors!} />;
   }
 
   return (
