@@ -1,6 +1,6 @@
 export const SkeletonLoadingPage = () => {
   return (
-    <div className='flex items-center justify-center min-h-[calc(100vh-8rem)] bg-backgroundLight dark:bg-dark-bg'>
+    <div className='flex items-center justify-center min-hight-custom bg-backgroundLight dark:bg-dark-bg'>
       <div className='w-full max-w-4xl space-y-6'>
         {/* Header Skeleton */}
         <div className='h-8 bg-backgroundLight-dark dark:bg-dark-bg-light rounded w-2/3 mx-auto animate-pulse'></div>

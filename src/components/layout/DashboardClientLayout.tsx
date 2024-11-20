@@ -14,8 +14,6 @@ type Props = Readonly<{
 }>;
 
 const HALF_AN_HOUR = 1_800_000;
-const ToastStyle =
-  'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400';
 
 export const DashboardClientLayout = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,7 +40,7 @@ export const DashboardClientLayout = ({ children }: Props) => {
         {
           autoClose: false,
           position: 'top-center',
-          className: ToastStyle,
+          className: 'toastify-custom-notification',
         }
       );
       console.log(notificationId);
@@ -75,7 +73,7 @@ export const DashboardClientLayout = ({ children }: Props) => {
       triggerToast(<NotificationError errors={[error]} />, {
         autoClose: false,
         position: 'top-center',
-        className: ToastStyle,
+        className: 'toastify-custom-notification',
       });
     } else {
       const halfAnHourMore = Math.floor(Date.now() / 1000) + HALF_AN_HOUR;

@@ -17,7 +17,7 @@ export default function RegisterGuestPage() {
   };
 
   return (
-    <div className='min-h-[calc(100vh-8rem)] flex flex-col'>
+    <div className='min-hight-custom flex flex-col'>
       <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
         <Title title={'Guest List'} />
         <SearchInput

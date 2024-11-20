@@ -46,25 +46,34 @@ body {
   animation-name: fadeIn;
 }
 
+/* ? customs commons */
+
+.min-hight-custom {
+  @apply min-h-[calc(100vh-8rem)];
+}
+
 /* ? buttons */
 
+/* .btn-primary {
+  @apply bg-primary dark:bg-dark-bg text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors;
+} */
 .btn-primary {
-  @apply w-full bg-primary dark:bg-dark-bg text-white dark:text-dark-text py-3 rounded-lg hover:bg-accent dark:hover:bg-dark-accent transition-colors;
+  @apply px-4 py-2 bg-primary text-white font-semibold rounded-lg hover:bg-accent dark:bg-dark-primary dark:text-dark-text dark:hover:bg-dark-accent dark:focus:ring-dark-accent;
 }
 
 /* Secondary Button */
 .btn-secondary {
-  @apply w-full bg-gray-500 dark:bg-gray-600 text-white dark:text-dark-text py-3 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors;
+  @apply bg-gray-500 dark:bg-gray-600 text-white dark:text-dark-text py-3 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-500 transition-colors;
 }
 
 /* Danger Button */
 .btn-danger {
-  @apply w-full bg-red-600 dark:bg-red-700 text-white dark:text-dark-text py-3 rounded-lg hover:bg-red-500 dark:hover:bg-red-600 transition-colors;
+  @apply bg-red-600 dark:bg-red-700 text-white dark:text-dark-text py-3 rounded-lg hover:bg-red-500 dark:hover:bg-red-600 transition-colors;
 }
 
 /* Disabled Button */
 .btn-disable {
-  @apply w-full bg-gray-300 dark:bg-gray-500 text-gray-500 dark:text-gray-400 py-3 rounded-lg cursor-not-allowed opacity-50;
+  @apply bg-gray-300 dark:bg-gray-500 text-gray-500 dark:text-gray-400 py-3 rounded-lg cursor-not-allowed opacity-50;
 }
 
 .color-transition {
@@ -114,4 +123,8 @@ body {
   fill: currentColor;
   height: 1rem !important;
   width: 1rem !important;
+}
+
+.toastify-custom-notification {
+  @apply dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400;
 }

@@ -17,9 +17,6 @@ type FormInputs = {
   password: string;
 };
 
-const ToastStyle =
-  'dark:bg-dark-bg dark:text-dark-text dark:border dark:border-slate-400';
-
 export const LoginForm = ({ errorMessage }: Props) => {
   const [pending, setPending] = useState(false);
 
@@ -37,7 +34,7 @@ export const LoginForm = ({ errorMessage }: Props) => {
     if (errorMessage && errorMessage !== '') {
       triggerToast(
         errorMessage,
-        { autoClose: 2500, className: ToastStyle },
+        { autoClose: 2500, className: 'toastify-custom-notification' },
         'error'
       );
     }
@@ -51,14 +48,18 @@ export const LoginForm = ({ errorMessage }: Props) => {
       setUser(user!);
       triggerToast(
         <NotificationLogin name={user!.name} />,
-        { autoClose: 2000, className: ToastStyle, closeButton: false },
+        {
+          autoClose: 2000,
+          className: 'toastify-custom-notification',
+          closeButton: false,
+        },
         'success'
       );
     } else {
       triggerToast(<NotificationError errors={errors!} />, {
         autoClose: 2500,
         position: 'top-center',
-        className: ToastStyle,
+        className: 'toastify-custom-notification',
         closeButton: false,
       });
     }

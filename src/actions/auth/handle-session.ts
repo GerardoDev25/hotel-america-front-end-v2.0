@@ -45,7 +45,7 @@ export const refresh = async () => {
 
   if (resp.ok) {
     cookies().set('token', resp.token!);
-    console.log('token refreshed');
+    console.log('token refreshed', new Date().toISOString().split('T').at(1));
   }
 
   if (resp.errors) {

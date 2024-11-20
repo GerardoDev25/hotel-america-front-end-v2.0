@@ -24,7 +24,7 @@ export const ErrorPageStandard = ({ code, legends }: Props) => {
   const url = getStaffRootUrl(user.role);
 
   return (
-    <div className='flex items-center justify-center min-h-[calc(100vh-8rem)] bg-backgroundLight dark:bg-dark-bg text-textDark dark:text-dark-text'>
+    <div className='flex items-center justify-center min-hight-custom bg-backgroundLight dark:bg-dark-bg text-textDark dark:text-dark-text'>
       <div className='text-center'>
         <div className='flex flex-col sm:flex-row items-center sm:text-left'>
           <h1 className='text-6xl sm:text-8xl font-bold text-primary dark:text-dark-primary mb-4 mr-4'>

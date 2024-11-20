@@ -11,7 +11,7 @@ export const StaffProfile = () => {
   return (
     <>
       <Title title={'User Information'} className='hidden sm:block' />
-      <div className='min-h-[calc(100vh-8rem)] sm:min-h-[calc(100vh-15rem)] flex justify-center items-center'>
+      <div className='min-hight-custom sm:min-h-[calc(100vh-15rem)] flex justify-center items-center'>
         <div className='flex sm:flex-row flex-col bg-backgroundLight-dark dark:bg-dark-bg-light w-full h-96 sm:w-[700px] p-2 sm:p-10 rounded-md'>
           <div className='w-full sm:w-[40%] flex flex-col gap-4 justify-center items-center'>
             <Avatar name={user.name} />
