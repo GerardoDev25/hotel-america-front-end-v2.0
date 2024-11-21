@@ -1,6 +1,6 @@
 'use server';
 
-import { sleep } from '@/utils';
+// import { sleep } from '@/utils';
 import { customFetch } from '@/actions/fetch';
 import { IRoom } from '@/interfaces';
 
@@ -12,7 +12,7 @@ type ReturnValue = {
 };
 
 export const getById = async (id: string) => {
-  await sleep(5);
+  // await sleep(5);
   const url = `api/room/${id}`;
 
   const resp: ReturnValue = await customFetch({ url });

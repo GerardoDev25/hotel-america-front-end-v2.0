@@ -11,7 +11,7 @@ export const Title = (props: Props) => {
   return (
     <div className={`mt-3 ${className}`}>
       <h1
-        className={`${fontTitle.className} antialiased text-4xl font-semibold my-10`}
+        className={`antialiased text-4xl font-semibold my-10 ${fontTitle.className}`}
       >
         {title}
       </h1>

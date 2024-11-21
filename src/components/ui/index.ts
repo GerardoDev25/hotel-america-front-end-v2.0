@@ -1,4 +1,9 @@
-export { DividerX, DividerY } from './divider/Divider';
+export {
+  DividerX,
+  DividerY,
+  DividerXColor,
+  DividerYColor,
+} from './divider/Divider';
 export * from './log-out/LogOutButton';
 export * from './error';
 export * from './profile/Profile';
