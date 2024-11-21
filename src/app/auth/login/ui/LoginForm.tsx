@@ -124,8 +124,8 @@ export const LoginForm = ({ errorMessage }: Props) => {
           <button
             type='submit'
             disabled={pending}
-            className={clsx({
-              'btn-primary': !pending,
+            className={clsx('w-full', {
+              'btn-primary dark:bg-dark-bg-light': !pending,
               'btn-disable': pending,
             })}
           >
