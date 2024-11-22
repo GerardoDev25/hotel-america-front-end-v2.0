@@ -17,7 +17,7 @@ export default async function RegisterRoomPage({ params }: Props) {
 
   return (
     <div>
-      <RoomIdHeader state={room!.state} />
+      <RoomIdHeader state={room!.state} roomId={id} />
       <DividerXColor className={getRoomStatusBgColor(room!.state)} />
       <RoomIdBody room={room!} />
     </div>

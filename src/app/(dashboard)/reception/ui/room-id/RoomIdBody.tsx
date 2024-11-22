@@ -44,7 +44,7 @@ export const RoomIdBody = ({ room }: Props) => {
           <p className='capitalize'>{`${isAvailable}`}</p>
         </div>
 
-        <div className='flex w-full  justify-around mr-4 sm:mr-10 mt-12'>
+        <div className='flex w-full sm:w-4/5 md:w-3/5 justify-around mr-4 sm:mr-10 mt-12'>
           <button className='w-1/3 btn-secondary'>Update</button>
           <button className='w-1/3 btn-danger'>Update</button>
         </div>

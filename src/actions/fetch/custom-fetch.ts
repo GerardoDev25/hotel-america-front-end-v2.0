@@ -21,7 +21,7 @@ export const customFetch = async (params: Params) => {
   headers.append('Content-Type', 'application/json');
 
   if (isAuth) {
-    const token = cookies().get('token');
+    const token = cookies().get('token')?.value ?? '';
     headers.append('Authorization', `Bearer ${token}`);
   }
 
@@ -30,6 +30,7 @@ export const customFetch = async (params: Params) => {
     headers,
     body: data ? JSON.stringify(data) : null,
   };
+
   try {
     const resp = await fetch(`${envs.BACK_END_URL}${url}`, {
       ...requestOptions,
