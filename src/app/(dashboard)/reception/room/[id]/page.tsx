@@ -1,6 +1,7 @@
-import { Room } from '@/actions';
-import { DividerXColor, ErrorPageStandard, Title } from '@/components/ui';
 import { getRoomStatusBgColor } from '@/utils';
+import { Room } from '@/actions';
+import { DividerXColor, ErrorPageStandard } from '@/components/ui';
+import { RoomIdBody, RoomIdHeader } from '../../ui/room-id';
 
 interface Props {
   params: { id: string };
@@ -16,9 +17,9 @@ export default async function RegisterRoomPage({ params }: Props) {
 
   return (
     <div>
-      <Title title='Room Management' className='mb-1' />
+      <RoomIdHeader state={room!.state} />
       <DividerXColor className={getRoomStatusBgColor(room!.state)} />
-      <pre>{JSON.stringify(room, null, 2)}</pre>
+      <RoomIdBody room={room!} />
     </div>
   );
 }

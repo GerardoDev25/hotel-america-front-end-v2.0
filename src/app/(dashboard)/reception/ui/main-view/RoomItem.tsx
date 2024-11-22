@@ -1,14 +1,10 @@
-import { IRoom, RoomState } from '@/interfaces';
-import { getRoomStatusBgColor } from '@/utils';
 import clsx from 'clsx';
 import Link from 'next/link';
+import { IRoom } from '@/interfaces';
+import { RoomStateTag } from '../../shared';
 
 interface Props {
   room: IRoom;
-}
-
-interface StateTagProps {
-  state: RoomState;
 }
 
 export const RoomItem: React.FC<Props> = ({ room }) => {
@@ -43,23 +39,5 @@ export const RoomItem: React.FC<Props> = ({ room }) => {
         </p>
       </div>
     </Link>
-  );
-};
-
-const RoomStateTag: React.FC<StateTagProps> = ({ state }) => {
-  const tag = state.replaceAll('_', ' ');
-  const bgColor = getRoomStatusBgColor(state);
-  return (
-    <span
-      className={clsx(
-        `inline-block px-2 py-1 rounded-lg font-bold text-white ${bgColor}`,
-        {
-          'dark:text-dark-bg-light':
-            state === 'occupied' || state === 'pending_cleaning',
-        }
-      )}
-    >
-      {tag}
-    </span>
   );
 };
