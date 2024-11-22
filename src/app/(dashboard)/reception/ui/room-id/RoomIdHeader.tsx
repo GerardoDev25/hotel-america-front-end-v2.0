@@ -7,8 +7,11 @@ import { IoAddOutline, IoCheckmarkSharp } from 'react-icons/io5';
 import { Room } from '@/actions';
 import { RoomState } from '@/interfaces';
 import { useNotificationStore } from '@/store';
-import { NotificationError, Title } from '@/components/ui';
-import { ImSpinner2 } from 'react-icons/im';
+import {
+  Title,
+  NotificationError,
+  HandlingRequestButton,
+} from '@/components/ui';
 
 interface Props {
   state: RoomState;
@@ -52,11 +55,7 @@ export const RoomIdHeader = ({ state, roomId }: Props) => {
       {state !== 'free' ? (
         <>
           {isFetchingData ? (
-            <button className='flex items-center btn-disable' disabled>
-              {' '}
-              <ImSpinner2 className='animate-spin' />
-              <span className='pl-2'>Handling Request...</span>
-            </button>
+            <HandlingRequestButton />
           ) : (
             <button
               className='flex items-center btn-primary'
