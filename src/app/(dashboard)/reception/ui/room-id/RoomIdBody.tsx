@@ -1,7 +1,11 @@
-import { DividerY } from '@/components/ui';
+'use client';
+
+import { useState } from 'react';
+
 import { IRoom } from '@/interfaces';
-import React from 'react';
+import { DividerY } from '@/components/ui';
 import { RoomStateTag } from '../../shared';
+import { UpdateDeleteButtons, UpdateRoomForm } from '.';
 
 interface Props {
   room: IRoom;
@@ -9,6 +13,12 @@ interface Props {
 
 export const RoomIdBody = ({ room }: Props) => {
   const { betsNumber, id, isAvailable, roomNumber, roomType, state } = room;
+
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  if (isUpdating) {
+    return <UpdateRoomForm room={room} />;
+  }
 
   return (
     <div className='flex flex-col sm:flex-row w-full h-[90vh] sm:h-[60vh] mt-4 gap-2 '>
@@ -44,10 +54,7 @@ export const RoomIdBody = ({ room }: Props) => {
           <p className='capitalize'>{`${isAvailable}`}</p>
         </div>
 
-        <div className='flex w-full sm:w-4/5 md:w-3/5 justify-around mr-4 sm:mr-10 mt-12'>
-          <button className='w-1/3 btn-secondary'>Update</button>
-          <button className='w-1/3 btn-danger'>Update</button>
-        </div>
+        <UpdateDeleteButtons setIsUpdating={setIsUpdating} />
       </div>
     </div>
   );
