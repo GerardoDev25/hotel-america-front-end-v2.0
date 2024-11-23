@@ -1,7 +1,8 @@
 'use client';
 
-import { InputText } from '@/components/form';
+import { CheckBox, InputText } from '@/components/form';
 import { IRoom } from '@/interfaces';
+import { IoPersonOutline } from 'react-icons/io5';
 
 interface Props {
   room: IRoom;
@@ -14,12 +15,15 @@ export const UpdateRoomForm = ({ room }: Props) => {
         <h2 className='text-2xl font-bold text-center'>Update Room</h2>
         <pre>{JSON.stringify(room, null, 2)}</pre>
         <InputText
+          label='hola mundo'
+          icon={<IoPersonOutline className='focus:peer-first:bg-primary' />}
           inputAttributes={{
             onClick: () => {
               console.log('hola mundo');
             },
           }}
         />
+        <CheckBox label={'hello world'} />
       </form>
     </div>
   );
