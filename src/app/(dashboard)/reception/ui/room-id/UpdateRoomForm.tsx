@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckBox, InputText } from '@/components/form';
+import { CheckBox, InputText, SelectInput } from '@/components/form';
 import { IRoom } from '@/interfaces';
 import { IoPersonOutline } from 'react-icons/io5';
 
@@ -24,6 +24,15 @@ export const UpdateRoomForm = ({ room }: Props) => {
           }}
         />
         <CheckBox label={'hello world'} />
+        <SelectInput
+          label={'Select an option'}
+          optionAttributes={{ className: 'capitalize' }}
+          options={[{ label: 'test', value: 'test' }]}
+          defaultOption={{
+            value: 'test-1',
+            label: 'test a',
+          }}
+        />
       </form>
     </div>
   );
