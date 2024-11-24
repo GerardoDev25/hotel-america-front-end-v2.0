@@ -1,3 +1,5 @@
+import { AiFillCaretDown } from 'react-icons/ai';
+
 interface Props {
   label: string;
   options: Option[];
@@ -18,16 +20,16 @@ export const SelectInput = ({
   optionAttributes,
 }: Props) => {
   return (
-    <div className={`max-w-xl ${className}`}>
+    <div className={`max-w-xl relative ${className ? className : ''}`}>
       <label
-        htmlFor='countries'
+        htmlFor='select-input'
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400'
       >
         {label}
       </label>
       <select
-        id='countries'
-        className='bg-backgroundLight focus:bg-backgroundLight-green border focus:border-none dark:border-none  text-textDark text-sm rounded-lg focus:ring-primary  block w-full p-2.5 dark:bg-gray-700  dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary  color-transition outline-none capitalize'
+        id='select-input'
+        className='w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary dark:bg-dark-bg dark:text-dark-text dark:border-dark-bg-light dark:focus:ring-dark-primary capitalize appearance-none'
         {...selectAttributes}
       >
         <option defaultValue={defaultOption.value} {...optionAttributes}>
@@ -39,6 +41,7 @@ export const SelectInput = ({
           </option>
         ))}
       </select>
+      <AiFillCaretDown className='absolute top-10 right-4 w-5 h-5 text-primary dark:text-dark-primary pointer-events-none' />
     </div>
   );
 };
