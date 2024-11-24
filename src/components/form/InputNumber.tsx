@@ -8,11 +8,7 @@ interface Props {
 
 export const InputNumber = ({ label, inputAttributes, className }: Props) => {
   return (
-    <div
-      className={`w-[250px] max-w-sm relative mt-4 ${
-        className ? className : ''
-      }`}
-    >
+    <div className={`w-full relative mt-4 ${className ? className : ''}`}>
       <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400 capitalize'>
         {label}
       </label>

@@ -6,7 +6,7 @@ interface Props {
 
 export const CheckBox = ({ label, className, inputAttributes }: Props) => {
   return (
-    <div className={`inline-flex items-center ${className}`}>
+    <div className={`inline-flex items-center ${className ? className : ''}`}>
       <label
         className='relative flex cursor-pointer items-center rounded-full p-3'
         htmlFor='login'
