@@ -5,6 +5,7 @@ import { IRoom, RoomState, RoomType } from '@/interfaces';
 
 interface Props {
   room: IRoom;
+  setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const roomTypes: { value: RoomType; label: RoomType }[] = [
@@ -19,7 +20,11 @@ const roomStates: { value: RoomState; label: string }[] = [
   { label: 'pending cleaning', value: 'pending_cleaning' },
 ];
 
-export const UpdateRoomForm = ({ room }: Props) => {
+export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
+  const onCancelUpdate = () => {
+    setIsUpdating(false);
+  };
+
   return (
     <div className='w-full min-h-[90vh] sm:min-h-[60vh]'>
       <form className='mx-auto w-full max-w-[65rem] h-full pt-4 sm:pt-12'>
@@ -63,7 +68,9 @@ export const UpdateRoomForm = ({ room }: Props) => {
             />
             <div className='flex justify-between w-full mt-6 sm:mt-11'>
               <button className='w-[47%] btn-secondary'>Update</button>
-              <button className='w-[47%] btn-danger'>Cancel</button>
+              <button className='w-[47%] btn-danger' onClick={onCancelUpdate}>
+                Cancel
+              </button>
             </div>
           </div>
         </div>

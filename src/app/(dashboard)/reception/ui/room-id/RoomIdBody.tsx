@@ -17,7 +17,7 @@ export const RoomIdBody = ({ room }: Props) => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   if (isUpdating) {
-    return <UpdateRoomForm room={room} />;
+    return <UpdateRoomForm room={room} setIsUpdating={setIsUpdating} />;
   }
 
   return (
