@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { AiFillCaretDown } from 'react-icons/ai';
 
 interface Props {
@@ -19,16 +20,18 @@ export const SelectInput = ({
   selectAttributes,
   optionAttributes,
 }: Props) => {
+  const inputId = useId();
+
   return (
     <div className={`max-w-xl relative ${className ? className : ''}`}>
       <label
-        htmlFor='select-input'
+        htmlFor={inputId}
         className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400'
       >
         {label}
       </label>
       <select
-        id='select-input'
+        id={inputId}
         className='z-auto w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary dark:bg-dark-bg dark:text-dark-text dark:border-dark-bg-light dark:focus:ring-dark-primary capitalize appearance-none'
         {...selectAttributes}
       >
