@@ -92,12 +92,12 @@ export const DashboardClientLayout = ({ children }: Props) => {
   }, [triggerToast, refreshToken]);
 
   return (
-    <div className='mx-0 min-h-screen bg-backgroundLight dark:bg-dark-bg dark:text-dark-text color-transition'>
+    <div className='mx-0 min-h-screen bg-backgroundLight dark:bg-dark-bg dark:text-dark-text color-transition relative'>
       {isAuth && (
         <>
           <TopMenu />
+          <div className='p-2 relative z-0'>{children}</div>
           <Sidebar />
-          <div className='p-2'>{children}</div>
         </>
       )}
     </div>
