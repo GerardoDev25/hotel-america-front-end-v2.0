@@ -4,7 +4,7 @@ import { AiFillCaretDown } from 'react-icons/ai';
 interface Props {
   label: string;
   options: Option[];
-  defaultOption: Option;
+  defaultOptionValue?: string;
   selectAttributes?: React.ComponentProps<'select'>;
   optionAttributes?: React.ComponentProps<'option'>;
   className?: React.StyleHTMLAttributes<HTMLDivElement>['className'];
@@ -12,15 +12,39 @@ interface Props {
 
 type Option = { value: string; label: string };
 
+const getOptions = (optionsList: Option[], value?: string) => {
+  const defaultOption: Option = { value: '', label: 'Select an Option' };
+
+  if (!value) {
+    return { default: defaultOption, options: optionsList };
+  }
+
+  const foundOption = optionsList.find((option) => option.value === value);
+
+  if (foundOption) {
+    const filteredOptions = optionsList.filter(
+      (option) => option.value !== value
+    );
+    return { default: foundOption, options: filteredOptions };
+  }
+
+  return { default: defaultOption, options: optionsList };
+};
+
 export const SelectInput = ({
   label,
   options,
   className,
-  defaultOption,
+  defaultOptionValue,
   selectAttributes,
   optionAttributes,
 }: Props) => {
   const inputId = useId();
+
+  const { options: optionsProcessed, default: defaultOption } = getOptions(
+    options,
+    defaultOptionValue
+  );
 
   return (
     <div className={`max-w-xl relative ${className ? className : ''}`}>
@@ -38,7 +62,7 @@ export const SelectInput = ({
         <option defaultValue={defaultOption.value} {...optionAttributes}>
           {defaultOption.label}
         </option>
-        {options.map((option) => (
+        {optionsProcessed.map((option) => (
           <option key={option.value} value={option.value} {...optionAttributes}>
             {option.label}
           </option>

@@ -1,5 +1,6 @@
 'use client';
 
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { CheckBox, InputNumber, SelectInput } from '@/components/form';
 import { IRoom, RoomState, RoomType } from '@/interfaces';
 
@@ -7,6 +8,8 @@ interface Props {
   room: IRoom;
   setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+type FormInputs = Omit<IRoom, 'id'>;
 
 const roomTypes: { value: RoomType; label: RoomType }[] = [
   { label: 'normal', value: 'normal' },
@@ -21,53 +24,65 @@ const roomStates: { value: RoomState; label: string }[] = [
 ];
 
 export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
+  const { register, handleSubmit } = useForm<FormInputs>({
+    defaultValues: { ...room },
+  });
+
   const onCancelUpdate = () => {
     setIsUpdating(false);
   };
 
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    console.log(data);
+  };
+
   return (
     <div className='w-full min-h-[90vh] sm:min-h-[60vh]'>
-      <form className='mx-auto w-full max-w-[65rem] h-full pt-4 sm:pt-12'>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className='mx-auto w-full max-w-[65rem] h-full pt-4 sm:pt-12'
+      >
         <h2 className='text-2xl font-bold text-center'>Update Room</h2>
         <div className='w-full flex flex-col sm:flex-row pt-4'>
           <div className='w-full sm:w-1/2 sm:p-8'>
             <SelectInput
-              className='mt-6 sm:mt-4'
               label={'Room Type'}
-              optionAttributes={{ className: 'capitalize' }}
               options={roomTypes}
-              defaultOption={{ label: room.roomType, value: room.roomType }}
+              className='mt-6 sm:mt-4'
+              selectAttributes={{ ...register('roomType') }}
+              optionAttributes={{ className: 'capitalize' }}
+              defaultOptionValue={room.roomType}
             />
             <InputNumber
               className='mt-6 sm:mt-4'
               label={'bets number'}
-              inputAttributes={{ value: room.betsNumber, placeholder: '1' }}
+              inputAttributes={{ ...register('betsNumber') }}
             />
 
             <InputNumber
               className='mt-6 sm:mt-4'
               label={'room number'}
-              inputAttributes={{ value: room.roomNumber, placeholder: '100' }}
+              inputAttributes={{ ...register('roomNumber') }}
             />
           </div>
           <div className='w-full sm:w-1/2 sm:p-8'>
             <SelectInput
-              className='mt-6 sm:mt-4'
-              label={'Room State'}
-              optionAttributes={{ className: 'capitalize' }}
               options={roomStates}
-              defaultOption={{
-                label: room.state.split('_').join(' '),
-                value: room.state,
-              }}
+              label={'Room State'}
+              className='mt-6 sm:mt-4'
+              defaultOptionValue={room.state}
+              selectAttributes={{ ...register('state') }}
+              optionAttributes={{ className: 'capitalize' }}
             />
             <CheckBox
               label={'Is Available'}
-              inputAttributes={{ checked: room.isAvailable }}
               className='mt-6 sm:mt-10'
+              inputAttributes={{ ...register('isAvailable') }}
             />
             <div className='flex justify-between w-full mt-6 sm:mt-11'>
-              <button className='w-[47%] btn-secondary'>Update</button>
+              <button type='submit' className='w-[47%] btn-secondary'>
+                Update
+              </button>
               <button className='w-[47%] btn-danger' onClick={onCancelUpdate}>
                 Cancel
               </button>
