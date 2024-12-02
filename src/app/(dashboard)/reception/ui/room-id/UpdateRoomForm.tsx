@@ -24,7 +24,11 @@ const roomStates: { value: RoomState; label: string }[] = [
 ];
 
 export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
-  const { register, handleSubmit } = useForm<FormInputs>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormInputs>({
     defaultValues: { ...room },
   });
 
@@ -33,7 +37,7 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    console.log(data);
+    console.log({ data, errors });
   };
 
   return (
@@ -49,9 +53,14 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
               label={'Room Type'}
               options={roomTypes}
               className='mt-6 sm:mt-4'
-              selectAttributes={{ ...register('roomType') }}
               optionAttributes={{ className: 'capitalize' }}
               defaultOptionValue={room.roomType}
+              selectAttributes={{
+                ...register('roomType', {
+                  validate: (value) =>
+                    roomTypes.map((s) => s.value).includes(value),
+                }),
+              }}
             />
             <InputNumber
               className='mt-6 sm:mt-4'
@@ -71,7 +80,12 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
               label={'Room State'}
               className='mt-6 sm:mt-4'
               defaultOptionValue={room.state}
-              selectAttributes={{ ...register('state') }}
+              selectAttributes={{
+                ...register('state', {
+                  validate: (value) =>
+                    roomStates.map((s) => s.value).includes(value),
+                }),
+              }}
               optionAttributes={{ className: 'capitalize' }}
             />
             <CheckBox

@@ -56,10 +56,11 @@ export const SelectInput = ({
       </label>
       <select
         id={inputId}
+        defaultValue={defaultOption.value}
         className='z-auto w-full px-4 py-2 border border-gray-300 rounded-lg bg-white text-gray-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary dark:bg-dark-bg dark:text-dark-text dark:border-dark-bg-light dark:focus:ring-dark-primary capitalize appearance-none'
         {...selectAttributes}
       >
-        <option defaultValue={defaultOption.value} {...optionAttributes}>
+        <option value={defaultOption.value} {...optionAttributes}>
           {defaultOption.label}
         </option>
         {optionsProcessed.map((option) => (

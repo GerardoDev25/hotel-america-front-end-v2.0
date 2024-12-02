@@ -40,7 +40,7 @@ export const CheckBox = ({ label, className, inputAttributes }: Props) => {
       </label>
       <label
         className='mt-px cursor-pointer select-none  text-textDark dark:text-dark-text'
-        htmlFor='login'
+        htmlFor={inputId}
       >
         {label}
       </label>
