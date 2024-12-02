@@ -1,8 +1,15 @@
 'use client';
 
+import clsx from 'clsx';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { CheckBox, InputNumber, SelectInput } from '@/components/form';
+
+import { Room } from '@/actions';
+import { useNotificationStore } from '@/store';
 import { IRoom, RoomState, RoomType } from '@/interfaces';
+import { CheckBox, InputNumber, SelectInput } from '@/components/form';
+import { HandlingRequestButton, NotificationError } from '@/components/ui';
 
 interface Props {
   room: IRoom;
@@ -24,11 +31,11 @@ const roomStates: { value: RoomState; label: string }[] = [
 ];
 
 export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormInputs>({
+  const [isFetching, setIsFetching] = useState(false);
+  const triggerToast = useNotificationStore((s) => s.triggerToast);
+  const router = useRouter();
+
+  const { register, handleSubmit } = useForm<FormInputs>({
     defaultValues: { ...room },
   });
 
@@ -37,7 +44,31 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    console.log({ data, errors });
+    setIsFetching(true);
+
+    const { ok, errors, message } = await Room.update({
+      ...data,
+      id: room.id,
+    });
+
+    if (ok) {
+      triggerToast(
+        message,
+        {
+          className: 'toastify-custom-notification',
+        },
+        'success'
+      );
+      router.refresh();
+      setIsUpdating(false);
+    } else {
+      triggerToast(<NotificationError errors={errors!} />, {
+        position: 'top-center',
+        className: 'toastify-custom-notification',
+        closeButton: true,
+      });
+    }
+    setIsFetching(false);
   };
 
   return (
@@ -94,10 +125,20 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
               inputAttributes={{ ...register('isAvailable') }}
             />
             <div className='flex justify-between w-full mt-6 sm:mt-11'>
-              <button type='submit' className='w-[47%] btn-secondary'>
-                Update
-              </button>
-              <button className='w-[47%] btn-danger' onClick={onCancelUpdate}>
+              {isFetching ? (
+                <HandlingRequestButton />
+              ) : (
+                <button type='submit' className='w-[47%] btn-secondary'>
+                  Update
+                </button>
+              )}
+              <button
+                className={clsx(`w-[47%] btn-danger`, {
+                  'btn-disable': isFetching,
+                })}
+                onClick={onCancelUpdate}
+                disabled={isFetching}
+              >
                 Cancel
               </button>
             </div>
