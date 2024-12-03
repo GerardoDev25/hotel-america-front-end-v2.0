@@ -18,6 +18,7 @@ export default function RootLayout({ children }: Props) {
     <html lang='en' className={clsx({ dark: isDarkMode })}>
       <body className={`${inter.className} antialiased`}>
         <RootClientLayout>{children}</RootClientLayout>
+        <div id='modal-root'></div>
       </body>
     </html>
   );
