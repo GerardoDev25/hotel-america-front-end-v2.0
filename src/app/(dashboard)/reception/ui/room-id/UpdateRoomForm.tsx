@@ -133,7 +133,7 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
             />
             <div className='flex justify-between w-full mt-6 sm:mt-11'>
               {isFetching ? (
-                <HandlingRequestButton />
+                <HandlingRequestButton text='Updating...' />
               ) : (
                 <button type='submit' className='w-[47%] btn-secondary'>
                   Update

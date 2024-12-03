@@ -54,7 +54,7 @@ export const RoomIdBody = ({ room }: Props) => {
           <p className='capitalize'>{`${isAvailable}`}</p>
         </div>
 
-        <UpdateDeleteButtons setIsUpdating={setIsUpdating} />
+        <UpdateDeleteButtons setIsUpdating={setIsUpdating} roomId={room.id} />
       </div>
     </div>
   );
