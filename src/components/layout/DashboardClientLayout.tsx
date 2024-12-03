@@ -43,7 +43,6 @@ export const DashboardClientLayout = ({ children }: Props) => {
           className: 'toastify-custom-notification',
         }
       );
-      console.log(notificationId);
     }
   }, [triggerToast, clearNotificationById]);
 

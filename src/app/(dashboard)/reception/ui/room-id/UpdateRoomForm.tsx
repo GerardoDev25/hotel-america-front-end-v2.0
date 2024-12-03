@@ -10,6 +10,7 @@ import { useNotificationStore } from '@/store';
 import { IRoom, RoomState, RoomType } from '@/interfaces';
 import { CheckBox, InputNumber, SelectInput } from '@/components/form';
 import { HandlingRequestButton, NotificationError } from '@/components/ui';
+import { cleanObject } from '@/utils';
 
 interface Props {
   room: IRoom;
@@ -46,8 +47,14 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setIsFetching(true);
 
-    const { ok, errors, message } = await Room.update({
+    const dataToSend: Partial<IRoom> = {
       ...data,
+      roomNumber:
+        data.roomNumber !== room.roomNumber ? data.roomNumber : undefined,
+    };
+
+    const { ok, errors, message } = await Room.update({
+      ...cleanObject(dataToSend),
       id: room.id,
     });
 
