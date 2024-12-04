@@ -43,7 +43,7 @@ export const Modal = ({ children }: Props) => {
       <div className='bg-backgroundLight dark:bg-dark-bg-light p-6 rounded-lg shadow-lg w-full max-w-md'>
         <button
           onClick={closeModal}
-          className='absolute top-4 right-4 text-dark-text hover:text-dark-complementary dark:text-backgroundLight dark:hover:text-accent transition-colors'
+          className='absolute top-4 right-4 text-dark-text hover:text-red-700 dark:hover:text-red-700 dark:text-backgroundLight transition-colors'
         >
           <IoCloseSharp size={30} />
         </button>

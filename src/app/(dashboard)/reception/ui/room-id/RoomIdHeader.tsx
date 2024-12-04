@@ -12,6 +12,7 @@ import {
   NotificationError,
   HandlingRequestButton,
 } from '@/components/ui';
+import Link from 'next/link';
 
 interface Props {
   state: RoomState;
@@ -67,10 +68,13 @@ export const RoomIdHeader = ({ state, roomId }: Props) => {
           )}
         </>
       ) : (
-        <button className='flex items-center btn-primary'>
+        <Link
+          className='flex items-center btn-primary'
+          href={`/reception/check-in/${roomId}`}
+        >
           <IoAddOutline />
           <span className='pl-2'>Make Check-in</span>
-        </button>
+        </Link>
       )}
     </div>
   );
