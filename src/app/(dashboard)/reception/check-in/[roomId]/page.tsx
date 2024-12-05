@@ -1,5 +1,6 @@
 import { Room } from '@/actions';
 import { ErrorPageStandard } from '@/components/ui';
+import { RegisterForm } from '../../ui/check-in-view';
 
 interface Props {
   params: { roomId: string };
@@ -11,9 +12,5 @@ export default async function CheckInPage({ params }: Props) {
   if (!ok) {
     return <ErrorPageStandard code={code} legends={errors!} />;
   }
-  return (
-    <div>
-      <pre>{JSON.stringify(room, null, 2)}</pre>
-    </div>
-  );
+  return <RegisterForm roomId={params.roomId} />;
 }

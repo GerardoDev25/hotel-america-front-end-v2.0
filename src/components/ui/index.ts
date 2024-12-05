@@ -10,7 +10,7 @@ export * from './pagination/Pagination';
 export * from './profile/Profile';
 export * from './search-input/SearchInput';
 export * from './sidebar';
-export * from './skeleton/SkeletonLoadingPage';
+export * from './skeleton';
 export * from './theme-toggle/ThemeToggle';
 export * from './title/Title';
 export * from './top-menu/TopMenu';
