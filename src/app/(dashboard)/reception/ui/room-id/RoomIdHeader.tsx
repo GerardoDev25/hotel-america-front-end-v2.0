@@ -53,10 +53,37 @@ export const RoomIdHeader = ({ state, roomId }: Props) => {
   return (
     <div className='flex flex-col sm:flex-row justify-between items-center mb-4'>
       <Title title='Room Management' className='mb-1' />
+      {roomId !== 'new' && (
+        <ButtonAction
+          state={state}
+          roomId={roomId}
+          isFetchingData={isFetchingData}
+          handleEnableRoom={handleEnableRoom}
+        />
+      )}
+    </div>
+  );
+};
+
+interface ButtonActionProps {
+  state: RoomState;
+  roomId: string;
+  isFetchingData: boolean;
+  handleEnableRoom: () => Promise<void>;
+}
+
+const ButtonAction = ({
+  roomId,
+  state,
+  handleEnableRoom,
+  isFetchingData,
+}: ButtonActionProps) => {
+  return (
+    <>
       {state !== 'free' ? (
         <>
           {isFetchingData ? (
-            <HandlingRequestButton />
+            <HandlingRequestButton text='Enabling...' />
           ) : (
             <button
               className='flex items-center btn-primary'
@@ -76,6 +103,6 @@ export const RoomIdHeader = ({ state, roomId }: Props) => {
           <span className='pl-2'>Make Check-in</span>
         </Link>
       )}
-    </div>
+    </>
   );
 };

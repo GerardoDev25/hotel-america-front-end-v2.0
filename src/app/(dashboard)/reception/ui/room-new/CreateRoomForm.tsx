@@ -2,20 +2,14 @@
 
 import clsx from 'clsx';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Room } from '@/actions';
-import { cleanObject } from '@/utils';
 import { useNotificationStore } from '@/store';
 import { IRoom, RoomState, RoomType } from '@/interfaces';
 import { CheckBox, InputNumber, SelectInput } from '@/components/form';
 import { HandlingRequestButton, NotificationError } from '@/components/ui';
-
-interface Props {
-  room: IRoom;
-  setIsUpdating: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { useRouter } from 'next/navigation';
 
 type FormInputs = Omit<IRoom, 'id'>;
 
@@ -31,43 +25,42 @@ const roomStates: { value: RoomState; label: string }[] = [
   { label: 'pending cleaning', value: 'pending_cleaning' },
 ];
 
-export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
+export const CreateRoomForm = () => {
   const [isFetching, setIsFetching] = useState(false);
+  const route = useRouter();
+
   const triggerToast = useNotificationStore((s) => s.triggerToast);
-  const router = useRouter();
 
-  const { register, handleSubmit } = useForm<FormInputs>({
-    defaultValues: { ...room },
-  });
+  const { register, handleSubmit } = useForm<FormInputs>();
 
-  const onCancelUpdate = () => {
-    setIsUpdating(false);
+  const onCancelCreate = () => {
+    triggerToast(
+      'Operation canceled',
+      {
+        className: 'toastify-custom-notification',
+      },
+      'info'
+    );
+    route.replace('/reception');
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setIsFetching(true);
 
-    const dataToSend: Partial<IRoom> = {
-      ...data,
-      roomNumber:
-        data.roomNumber !== room.roomNumber ? data.roomNumber : undefined,
-    };
-
-    const { ok, errors, message } = await Room.update({
-      ...cleanObject(dataToSend),
-      id: room.id,
-    });
+    const { ok, errors, room } = await Room.create(data);
 
     if (ok) {
       triggerToast(
-        message,
+        <p>
+          Room: <span className='font-bold'>{room?.roomNumber}</span> created
+          successfully
+        </p>,
         {
           className: 'toastify-custom-notification',
         },
         'success'
       );
-      router.refresh();
-      setIsUpdating(false);
+      route.replace('/reception');
     } else {
       triggerToast(<NotificationError errors={errors!} />, {
         position: 'top-center',
@@ -84,7 +77,7 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
         onSubmit={handleSubmit(onSubmit)}
         className='mx-auto w-full max-w-[65rem] h-full pt-4 sm:pt-12'
       >
-        <h2 className='text-2xl font-bold text-center'>Update Room</h2>
+        <h2 className='text-2xl font-bold text-center'>Create Room</h2>
         <div className='w-full flex flex-col sm:flex-row pt-4'>
           <div className='w-full sm:w-1/2 sm:p-8'>
             <SelectInput
@@ -92,7 +85,6 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
               options={roomTypes}
               className='mt-6 sm:mt-4'
               optionAttributes={{ className: 'capitalize' }}
-              defaultOptionValue={room.roomType}
               selectAttributes={{
                 ...register('roomType', {
                   validate: (value) =>
@@ -103,13 +95,21 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
             <InputNumber
               className='mt-6 sm:mt-4'
               label={'bets number'}
-              inputAttributes={{ ...register('betsNumber') }}
+              inputAttributes={{
+                ...register('betsNumber', { required: true, min: 1 }),
+                placeholder: '1',
+                min: 1,
+              }}
             />
 
             <InputNumber
               className='mt-6 sm:mt-4'
               label={'room number'}
-              inputAttributes={{ ...register('roomNumber') }}
+              inputAttributes={{
+                ...register('roomNumber', { required: true, min: 1 }),
+                placeholder: '100',
+                min: 1,
+              }}
             />
           </div>
           <div className='w-full sm:w-1/2 sm:p-8'>
@@ -117,7 +117,6 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
               options={roomStates}
               label={'Room State'}
               className='mt-6 sm:mt-4'
-              defaultOptionValue={room.state}
               selectAttributes={{
                 ...register('state', {
                   validate: (value) =>
@@ -133,20 +132,17 @@ export const UpdateRoomForm = ({ room, setIsUpdating }: Props) => {
             />
             <div className='flex justify-between w-full mt-6 sm:mt-11'>
               {isFetching ? (
-                <HandlingRequestButton
-                  text='Updating...'
-                  className='w-[47%] text-center'
-                />
+                <HandlingRequestButton text='Creating...' className='w-[47%]' />
               ) : (
                 <button type='submit' className='w-[47%] btn-secondary'>
-                  Update
+                  Create
                 </button>
               )}
               <button
                 className={clsx(`w-[47%] btn-danger`, {
                   'btn-disable': isFetching,
                 })}
-                onClick={onCancelUpdate}
+                onClick={onCancelCreate}
                 disabled={isFetching}
               >
                 Cancel
