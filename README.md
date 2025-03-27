@@ -18,3 +18,4 @@ make sure you have all of this things on your machine
 2. install dependencies ```yarn``` 
 3. run application ```yarn dev```
 4. go to __localhost:4000__
+5. test
